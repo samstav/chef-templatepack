@@ -71,6 +71,7 @@
 	"recipes/magento_configure.rb": "recipes/magento_configure.rb",
 	"recipes/_magento_fpc.rb": "recipes/_magento_fpc.rb",
 	"recipes/magento_install.rb": "recipes/magento_install.rb",
+	"recipes/_magento_redis.rb": "recipes/_magento_redis.rb",
 	"recipes/mysql_add_drive.rb": "recipes/mysql_add_drive.rb",
 	"recipes/mysql_holland.rb": "recipes/mysql_holland.rb",
 	"recipes/_mysql_logging.rb": "recipes/_mysql_logging.rb",
