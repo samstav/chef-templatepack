@@ -1,6 +1,6 @@
 # Encoding: utf-8
 #
-# Cookbook Name:: magentostack
+# Cookbook Name:: |{.Cookbook.Name}|
 # Recipe:: redis_single_slave
 #
 # Copyright 2014, Rackspace US, Inc.
@@ -21,24 +21,24 @@
 # required by libraries/util.rb
 include_recipe 'chef-sugar'
 
-master_name, master_ip, master_port = MagentostackUtil.redis_find_masters(node) do |name, data|
+master_name, master_ip, master_port = MagentoUtil.redis_find_masters(node) do |name, data|
   name.include?('-single-master') && !name.include?('slave')
 end
 
 unless master_name && master_ip && master_port
-  Chef::Log.warn('magentostack::redis_single_slave did not find a redis single master to configure a redis slave, not proceeding')
+  Chef::Log.warn('|{.Cookbook.Name}|::redis_single_slave did not find a redis single master to configure a redis slave, not proceeding')
   return
 end
 
-bind_port = node['magentostack']['redis']['bind_port_single_slave']
+bind_port = node['|{.Cookbook.Name}|']['redis']['bind_port_single_slave']
 server_name = "#{bind_port}-single-slave"
-node.set['magentostack']['redis']['servers'][server_name] = {
+node.set['|{.Cookbook.Name}|']['redis']['servers'][server_name] = {
   'name' => server_name,
   'port' => bind_port,
-  'requirepass' => MagentostackUtil.redis_single_password(node),
-  'masterauth' => MagentostackUtil.redis_single_password(node),
+  'requirepass' => MagentoUtil.redis_single_password(node),
+  'masterauth' => MagentoUtil.redis_single_password(node),
   'slaveof' => { 'master_name' => master_name, 'address' => master_ip, 'port' => master_port }
 }
-tag('magentostack_redis')
-tag('magentostack_redis_single_slave')
-MagentostackUtil.recompute_redis(node)
+tag('magento_redis')
+tag('magento_redis_single_slave')
+MagentoUtil.recompute_redis(node)

@@ -30,4 +30,4 @@ node.set['|{.Cookbook.Name}|']['redis']['servers'][server_name] = {
 }
 tag('magento_redis')
 tag('magento_redis_session')
-MagentostackUtil.recompute_redis(node)
+MagentoUtil.recompute_redis(node)

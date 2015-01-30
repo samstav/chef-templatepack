@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# this recipe should be called after every other magentostack::redis_* recipe
+# this recipe should be called after every other |{.Cookbook.Name}|::redis_* recipe
 # because the configure and enable recipes in redisio will complete the setup
 # of all instances (redis and sentinel both)
 %w(
