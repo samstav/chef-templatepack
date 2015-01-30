@@ -7,6 +7,7 @@
     "chef-sugar",
     "redis-multi",
     "redisio",
+    "stack_commons",
     "nfs"
   ],
   "berks_dependencies": {
@@ -23,6 +24,7 @@
   "stencils": {
     "default": {
       "files": {
+        "recipes/newrelic.rb": "recipes/newrelic.rb",
         "recipes/nfs_client.rb": "recipes/nfs_client.rb",
         "recipes/nfs_server.rb": "recipes/nfs_server.rb",
         "recipes/redis_configure.rb": "recipes/redis_configure.rb",
