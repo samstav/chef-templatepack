@@ -56,7 +56,7 @@ end
 
 uwsgi_conf = "#{app_name}-uwsgi.ini"
 uwsgi_socket = "/tmp/#{app_name}-uwsgi.sock"
-uwsgi_conf_path = File.join(node['nginx']['dir'], uwsgi_confi)
+uwsgi_conf_path = File.join(node['nginx']['dir'], uwsgi_conf)
 template uwsgi_confi_path do
   source "nginx/#{uwsgi_conf}.erb"
   owner 'root'
