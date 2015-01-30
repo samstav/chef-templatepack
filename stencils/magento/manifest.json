@@ -4,36 +4,29 @@
   "default_stencil": "default",
   "dependencies": [
     "apt",
+    "ark",
     "chef-sugar",
+    "cron",
+    "git",
+    "logrotate",
+    "mysql-multi",
+    "nfs",
+    "openssl",
+    "partial_search",
+    "php-fpm",
+    "platformstack",
+    "rackspace_iptables",
+    "rackspacecloud",
     "redis-multi",
     "redisio",
     "stack_commons",
-    "nfs"
+    "xml",
+    "xmledit",
+    "yum",
+    "yum-epel",
+    "yum-ius"
   ],
   "berks_dependencies": {
-    "redisio": {
-      "git": "git@github.com:brianbianco/redisio.git"
-    },
-    "disable_ipv6": {
-      "path": "test/fixtures/cookbooks/disable_ipv6"
-    },
-    "wrapper": {
-      "path": "test/fixtures/cookbooks/wrapper"
-    },
-    "ark": {
-      "git": "https://github.com/burtlo/ark.git",
-      "ref": "1f7c092ffe80073409bce7fa851346fb076a259f"
-    },
-    "openssl": {
-      "git": "https://github.com/racker/openssl.git"
-    },
-    "kibana": {
-      "git": "git@github.com:lusis/chef-kibana.git",
-      "branch": "KIBANA3"
-    },
-    "newrelic_plugins": {
-      "git": "git@github.com:rackspace-cookbooks/newrelic_plugins_chef.git"
-    }
   },
   "options": {
     "name": {
@@ -44,6 +37,7 @@
   "stencils": {
     "default": {
       "files": {
+	"Berksfile": "Berksfile",
 	".rubocop.yml": ".rubocop.yml",
 	"LICENSE": "LICENSE",
 	"CHANGELOG.md": "CHANGELOG.md",
@@ -101,7 +95,99 @@
 	"templates/default/fastcgi.conf.erb": "templates/default/fastcgi.conf.erb",
 	"templates/default/git_ssh_wrapper.sh.erb": "templates/default/git_ssh_wrapper.sh.erb",
 	"templates/default/magento.sh.erb": "templates/default/magento.sh.erb",
-	"templates/default/mysql/my.cnf.erb": "templates/default/mysql/my.cnf.erb"
+	"templates/default/mysql/my.cnf.erb": "templates/default/mysql/my.cnf.erb",
+	"test/fixtures/cookbooks/disable_ipv6/attributes/default.rb": "test/fixtures/cookbooks/disable_ipv6/attributes/default.rb",
+	"test/fixtures/cookbooks/disable_ipv6/metadata.rb": "test/fixtures/cookbooks/disable_ipv6/metadata.rb",
+	"test/fixtures/cookbooks/disable_ipv6/README.md": "test/fixtures/cookbooks/disable_ipv6/README.md",
+	"test/fixtures/cookbooks/disable_ipv6/recipes/default.rb": "test/fixtures/cookbooks/disable_ipv6/recipes/default.rb",
+	"test/fixtures/cookbooks/disable_ipv6/recipes/disable_ipv6.rb": "test/fixtures/cookbooks/disable_ipv6/recipes/disable_ipv6.rb",
+	"test/fixtures/cookbooks/wrapper/CHANGELOG.md": "test/fixtures/cookbooks/wrapper/CHANGELOG.md",
+	"test/fixtures/cookbooks/wrapper/metadata.rb": "test/fixtures/cookbooks/wrapper/metadata.rb",
+	"test/fixtures/cookbooks/wrapper/README.md": "test/fixtures/cookbooks/wrapper/README.md",
+	"test/fixtures/cookbooks/wrapper/recipes/default_expanded.rb": "test/fixtures/cookbooks/wrapper/recipes/default_expanded.rb",
+	"test/fixtures/cookbooks/wrapper/recipes/default.rb": "test/fixtures/cookbooks/wrapper/recipes/default.rb",
+	"test/fixtures/cookbooks/wrapper/recipes/_redis_password.rb": "test/fixtures/cookbooks/wrapper/recipes/_redis_password.rb",
+	"test/fixtures/cookbooks/wrapper/recipes/_redis_password_single.rb": "test/fixtures/cookbooks/wrapper/recipes/_redis_password_single.rb",
+	"test/fixtures/files/fastcgi": "test/fixtures/files/fastcgi",
+	"test/fixtures/files/fastcgi_apache2-4": "test/fixtures/files/fastcgi_apache2-4",
+	"test/fixtures/platform/centos/6.5.json": "test/fixtures/platform/centos/6.5.json",
+	"test/fixtures/platform/ubuntu/12.04.json": "test/fixtures/platform/ubuntu/12.04.json",
+	"test/fixtures/platform/ubuntu/14.04.json": "test/fixtures/platform/ubuntu/14.04.json",
+	"test/integration/community-php54/serverspec/caches_spec.rb": "test/integration/community-php54/serverspec/caches_spec.rb",
+	"test/integration/community-php54/serverspec/default_spec.rb": "test/integration/community-php54/serverspec/default_spec.rb",
+	"test/integration/community-php54/serverspec/magento_config_spec.rb": "test/integration/community-php54/serverspec/magento_config_spec.rb",
+	"test/integration/community-php54/serverspec/magento_spec.rb": "test/integration/community-php54/serverspec/magento_spec.rb",
+	"test/integration/community-php54/serverspec/redis_spec.rb": "test/integration/community-php54/serverspec/redis_spec.rb",
+	"test/integration/community-redis/magento_admin_spec.rb": "test/integration/community-redis/magento_admin_spec.rb",
+	"test/integration/community-redis/serverspec/caches_spec.rb": "test/integration/community-redis/serverspec/caches_spec.rb",
+	"test/integration/community-redis/serverspec/default_spec.rb": "test/integration/community-redis/serverspec/default_spec.rb",
+	"test/integration/community-redis/serverspec/magento_spec.rb": "test/integration/community-redis/serverspec/magento_spec.rb",
+	"test/integration/community-redis/serverspec/redis_spec.rb": "test/integration/community-redis/serverspec/redis_spec.rb",
+	"test/integration/community/serverspec/caches_spec.rb": "test/integration/community/serverspec/caches_spec.rb",
+	"test/integration/community/serverspec/default_spec.rb": "test/integration/community/serverspec/default_spec.rb",
+	"test/integration/community-redis/magento_admin_spec.rb": "test/integration/community-redis/magento_admin_spec.rb",
+	"test/integration/community-redis/serverspec/caches_spec.rb": "test/integration/community-redis/serverspec/caches_spec.rb",
+	"test/integration/community-redis/serverspec/default_spec.rb": "test/integration/community-redis/serverspec/default_spec.rb",
+	"test/integration/community-redis/serverspec/magento_spec.rb": "test/integration/community-redis/serverspec/magento_spec.rb",
+	"test/integration/community-redis/serverspec/redis_spec.rb": "test/integration/community-redis/serverspec/redis_spec.rb",
+	"test/integration/community/serverspec/caches_spec.rb": "test/integration/community/serverspec/caches_spec.rb",
+	"test/integration/community/serverspec/default_spec.rb": "test/integration/community/serverspec/default_spec.rb",
+	"test/integration/community/serverspec/magento_admin_spec.rb": "test/integration/community/serverspec/magento_admin_spec.rb",
+	"test/integration/community/serverspec/magento_config_spec.rb": "test/integration/community/serverspec/magento_config_spec.rb",
+	"test/integration/community/serverspec/magento_spec.rb": "test/integration/community/serverspec/magento_spec.rb",
+	"test/integration/community/serverspec/redis_spec.rb": "test/integration/community/serverspec/redis_spec.rb",
+	"test/integration/enterprise-cloudfiles/magento_admin_spec.rb": "test/integration/enterprise-cloudfiles/magento_admin_spec.rb",
+	"test/integration/enterprise-cloudfiles/serverspec/caches_spec.rb": "test/integration/enterprise-cloudfiles/serverspec/caches_spec.rb",
+	"test/integration/enterprise-cloudfiles/serverspec/default_spec.rb": "test/integration/enterprise-cloudfiles/serverspec/default_spec.rb",
+	"test/integration/enterprise-cloudfiles/serverspec/magento_config_spec.rb": "test/integration/enterprise-cloudfiles/serverspec/magento_config_spec.rb",
+	"test/integration/enterprise-git/magento_admin_spec.rb": "test/integration/enterprise-git/magento_admin_spec.rb",
+	"test/integration/enterprise-php54/serverspec/caches_spec.rb": "test/integration/enterprise-php54/serverspec/caches_spec.rb",
+	"test/integration/enterprise-php54/serverspec/default_spec.rb": "test/integration/enterprise-php54/serverspec/default_spec.rb",
+	"test/integration/enterprise-php54/serverspec/magento_config_spec.rb": "test/integration/enterprise-php54/serverspec/magento_config_spec.rb",
+	"test/integration/enterprise-php54-v113/serverspec/caches_spec.rb": "test/integration/enterprise-php54-v113/serverspec/caches_spec.rb",
+	"test/integration/enterprise-php54-v113/serverspec/default_spec.rb": "test/integration/enterprise-php54-v113/serverspec/default_spec.rb",
+	"test/integration/enterprise-php54-v113/serverspec/magento_config_spec.rb": "test/integration/enterprise-php54-v113/serverspec/magento_config_spec.rb",
+	"test/integration/enterprise-redis/magento_admin_spec.rb": "test/integration/enterprise-redis/magento_admin_spec.rb",
+	"test/integration/enterprise-redis/serverspec/caches_spec.rb": "test/integration/enterprise-redis/serverspec/caches_spec.rb",
+	"test/integration/enterprise-redis/serverspec/magento_config_spec.rb": "test/integration/enterprise-redis/serverspec/magento_config_spec.rb",
+	"test/integration/enterprise/serverspec/caches_spec.rb": "test/integration/enterprise/serverspec/caches_spec.rb",
+	"test/integration/enterprise/serverspec/default_spec.rb": "test/integration/enterprise/serverspec/default_spec.rb",
+	"test/integration/enterprise/serverspec/magento_config_spec.rb": "test/integration/enterprise/serverspec/magento_config_spec.rb",
+	"test/integration/enterprise-v113/serverspec/caches_spec.rb": "test/integration/enterprise-v113/serverspec/caches_spec.rb",
+	"test/integration/enterprise-v113/serverspec/default_spec.rb": "test/integration/enterprise-v113/serverspec/default_spec.rb",
+	"test/integration/enterprise-v113/serverspec/magento_config_spec.rb": "test/integration/enterprise-v113/serverspec/magento_config_spec.rb",
+	"test/integration/environments/chefspec.json": "test/integration/environments/chefspec.json",
+	"test/integration/environments/default_expanded.json": "test/integration/environments/default_expanded.json",
+	"test/integration/environments/default_single.json": "test/integration/environments/default_single.json",
+	"test/integration/helpers/serverspec/apache_examples.rb": "test/integration/helpers/serverspec/apache_examples.rb",
+	"test/integration/helpers/serverspec/cache_examples.rb": "test/integration/helpers/serverspec/cache_examples.rb",
+	"test/integration/helpers/serverspec/default_examples.rb": "test/integration/helpers/serverspec/default_examples.rb",
+	"test/integration/helpers/serverspec/fixtures/magento-check.php": "test/integration/helpers/serverspec/fixtures/magento-check.php",
+	"test/integration/helpers/serverspec/fixtures/magento-clean-caches.php": "test/integration/helpers/serverspec/fixtures/magento-clean-caches.php",
+	"test/integration/helpers/serverspec/magento_admin_examples.rb": "test/integration/helpers/serverspec/magento_admin_examples.rb",
+	"test/integration/helpers/serverspec/mysql_examples.rb": "test/integration/helpers/serverspec/mysql_examples.rb",
+	"test/integration/helpers/serverspec/php_examples.rb": "test/integration/helpers/serverspec/php_examples.rb",
+	"test/integration/helpers/serverspec/spec_helper.rb": "test/integration/helpers/serverspec/spec_helper.rb",
+	"test/integration/kitchen_secret_key": "test/integration/kitchen_secret_key",
+	"test/integration/nodes/chefspec01.json": "test/integration/nodes/chefspec01.json",
+	"test/integration/nodes/magento_single_01.json": "test/integration/nodes/magento_single_01.json",
+	"test/integration/nodes/master01.json": "test/integration/nodes/master01.json",
+	"test/integration/nodes/redis-sentinel01.json": "test/integration/nodes/redis-sentinel01.json",
+	"test/integration/nodes/redis-session01.json": "test/integration/nodes/redis-session01.json",
+	"test/integration/nodes/slave01.json": "test/integration/nodes/slave01.json",
+	"test/unit/spec/apache-fpm_spec.rb": "test/unit/spec/apache-fpm_spec.rb",
+	"test/unit/spec/default_spec.rb": "test/unit/spec/default_spec.rb",
+	"test/unit/spec/magento_admin_spec.rb": "test/unit/spec/magento_admin_spec.rb",
+	"test/unit/spec/magento_cloudfiles.rb": "test/unit/spec/magento_cloudfiles.rb",
+	"test/unit/spec/magento_git.rb": "test/unit/spec/magento_git.rb",
+	"test/unit/spec/magento_spec.rb": "test/unit/spec/magento_spec.rb",
+	"test/unit/spec/mysql_spec.rb": "test/unit/spec/mysql_spec.rb",
+	"test/unit/spec/newrelic_spec.rb": "test/unit/spec/newrelic_spec.rb",
+	"test/unit/spec/redis_spec.rb": "test/unit/spec/redis_spec.rb",
+	"test/unit/spec/spec_helper.rb": "test/unit/spec/spec_helper.rb",
+	"test/unit/spec/support/matchers.rb": "test/unit/spec/support/matchers.rb",
+	"test/unit/spec/support/platform_properties.rb": "test/unit/spec/support/platform_properties.rb",
+	"test/unit/spec/support/supported_platforms.rb": "test/unit/spec/support/supported_platforms.rb"
       }
     }
   }

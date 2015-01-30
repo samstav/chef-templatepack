@@ -1,0 +1,38 @@
+{
+  "name": "magento_single_01",
+  "chef_environment": "_default",
+  "json_class": "Chef::Node",
+  "automatic": {
+    "hostname": "vagrant.vm",
+    "recipes": [
+      "|{.Cookbook.Name}|::magento_configure"
+    ],
+    "roles": [
+    ],
+    "ipaddress": "127.0.0.1"
+  },
+  "tags": [
+    "magento_app_node",
+    "|{.Cookbook.Name}|_redis"
+  ],
+  "normal": {
+  },
+  "chef_type": "node",
+  "default": {
+  },
+  "override": {
+    "|{.Cookbook.Name}|": {
+      "redis": {
+        "servers": {
+          "6379-single-master": {
+            "name": "6379-single-master",
+            "port": 6379
+          }
+        }
+      }
+    }
+  },
+  "run_list": [
+    "recipe[|{.Cookbook.Name}|::magento]"
+  ]
+}
