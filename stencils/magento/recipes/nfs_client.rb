@@ -1,7 +1,7 @@
 # Encoding: utf-8
 #
 # Cookbook Name:: |{.Cookbook.Name}|
-# Recipe:: |{.Options.Name}|
+# Recipe:: nfs_client
 #
 # Copyright |{.Cookbook.Year}|, Rackspace Hosting
 #
@@ -20,7 +20,7 @@
 
 include_recipe 'chef-sugar'
 include_recipe 'nfs::default' # ~RACK002
-nfs_server_node, export_name, export_root = MagentostackUtil.best_nfs_server(node)
+nfs_server_node, export_name, export_root = MagentoUtil.best_nfs_server(node)
 return unless nfs_server_node && export_name && export_root
 
 mount_point_path = node['|{.Cookbook.Name}|']['nfs_client']['mount_point']

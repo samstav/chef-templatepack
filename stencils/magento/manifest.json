@@ -5,8 +5,15 @@
   "dependencies": [
     "apt",
     "chef-sugar",
+    "redis-multi",
+    "redisio",
     "nfs"
   ],
+  "berks_dependencies": {
+    "redisio": {
+      "git": "git@github.com:brianbianco/redisio.git"
+    }
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
@@ -17,7 +24,16 @@
     "default": {
       "files": {
         "recipes/nfs_client.rb": "recipes/nfs_client.rb",
-        "recipes/nfs_server.rb": "recipes/nfs_server.rb"
+        "recipes/nfs_server.rb": "recipes/nfs_server.rb",
+        "recipes/redis_configure.rb": "recipes/redis_configure.rb",
+        "recipes/redis_object.rb": "recipes/redis_object.rb",
+        "recipes/redis_object_slave.rb": "recipes/redis_object_slave.rb",
+        "recipes/redis_page.rb": "recipes/redis_page.rb",
+        "recipes/redis_page_slave.rb": "recipes/redis_page_slave.rb",
+        "recipes/redis_sentinel.rb": "recipes/redis_sentinel.rb",
+        "recipes/redis_session.rb": "recipes/redis_session.rb",
+        "recipes/redis_session_slave.rb": "recipes/redis_session_slave.rb",
+        "recipes/redis_single.rb": "recipes/redis_single.rb"
       }
     }
   }

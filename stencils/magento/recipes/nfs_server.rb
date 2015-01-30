@@ -1,9 +1,9 @@
 # Encoding: utf-8
 #
-# Cookbook Name:: magentostack
+# Cookbook Name:: |{.Cookbook.Name}|
 # Recipe:: nfs_server
 #
-# Copyright 2014, Rackspace Hosting
+# Copyright |{.Cookbook.Year}|, Rackspace Hosting
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
