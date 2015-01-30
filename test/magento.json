@@ -1,0 +1,10 @@
+{
+    "name": "magento",
+    "stencils": [
+	{
+	    "name": "nfs_server",
+	    "stencil_set": "magento",
+	    "stencil": "nfs_server"
+	}
+    ]
+}
