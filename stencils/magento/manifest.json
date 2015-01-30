@@ -1,0 +1,19 @@
+{
+  "id": "magento",
+  "api": 1,
+  "default_stencil": "default",
+  "dependencies": [
+  ],
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "default"
+    }
+  },
+  "stencils": {
+    "default": {
+      "files": {
+      }
+    }
+  }
+}

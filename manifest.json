@@ -22,6 +22,9 @@
     },
     "mysql": {
       "help": "Creates some MySQL recipes"
+    },
+    "magento": {
+      "help": "Creates a magento app"
     }
   },
   "base": {
@@ -39,7 +42,6 @@
       "test/integration/encrypted_data_bag_secret",
       "test/integration/default/serverspec/spec_helper.rb",
       "test/integration/default/serverspec/default_spec.rb"
-
     ],
     "directories": [
       "attributes",
