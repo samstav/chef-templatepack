@@ -37,7 +37,7 @@ application app_name do
   deploy_key deploy_keys[app_name]
   repository |{.QString .Options.Repo}|
   revision |{.QString .Options.Revision}|
-  restart_command "if [ -f /var/run/uwsgi-#{app_name}.pid && ps -p `cat /var/run/uwsgi-#{app_name}.pid` > /dev/null; then kill `cat /var/run/uwsgi-#{site}.pid`; fi"
+  restart_command "if [ -f /var/run/uwsgi-#{app_name}.pid && ps -p `cat /var/run/uwsgi-#{app_name}.pid` > /dev/null; then kill `cat /var/run/uwsgi-#{app_name}.pid`; fi"
   migrate |{.Options.Migrate}|
   environment_name node.chef_environment
 
@@ -76,7 +76,7 @@ end
 
 uwsgi_service app_name do
   uwsgi_bin File.Join(app_path, 'shared/env/bin/uwsgi')
-  pid_path "/var/run/uwsgi-#{site}.pid"
+  pid_path "/var/run/uwsgi-#{app_name}.pid"
   home_path File.Join(app_path, 'current')
   config_file uwsgi_conf_path
 end
@@ -88,7 +88,7 @@ template File.join(node['nginx']['dir'], "sites-available", app_name) do
   mode '0644'
   variables(
   |{ if ne .Options.Hostname "" }|
-    hostname: |{ .Options.Hostname }|,
+    hostname: |{.QString .Options.Hostname }|,
   |{ else }|
     hostname: app_name,
   |{ end }|
