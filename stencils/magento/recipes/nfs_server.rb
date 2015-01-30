@@ -61,5 +61,5 @@ nfs_export export_full_path do
 end
 
 # save to help the client recipe find me if it's also running on this same node
-tag('magentostack_nfs_server')
+tag('magento_nfs_server')
 node.save unless Chef::Config[:solo]
