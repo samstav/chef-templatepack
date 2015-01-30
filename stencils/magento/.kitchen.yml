@@ -1,0 +1,162 @@
+---
+driver:
+  name: vagrant
+  network:
+  - ["forwarded_port", {guest: 8080,   host: 8080, auto_correct: true}]
+  - ["forwarded_port", {guest: 8443,   host: 8443, auto_correct: true}]
+  customize:
+    memory: 1024
+
+provisioner:
+  name: chef_zero
+  environments_path: test/integration/environments
+  require_chef_omnibus: 11.16.4
+  attributes:
+    |{.Cookbook.Name}|:
+      web:
+        http_port: '8080'
+        https_port: '8443'
+    authorization:
+      sudo:
+        users: ['vagrant']
+        passwordless: true
+    mysql:
+      server_root_password: "randompass"
+      server_repl_password: "randompass"
+      server_debian_password: "randompass"
+    holland:
+      password: "randompass"
+
+platforms:
+  # Leaving Ubuntu out until Phase 2
+  # - name: ubuntu-12.04
+  #   run_list:
+  #   - recipe[apt]
+  # - name: ubuntu-14.04
+  #   run_list:
+  #   - recipe[apt]
+  - name: centos-6.5
+    run_list:
+    - recipe[yum]
+
+# NB: Every build will specify 'community' or 'enterprise' edition, but all
+# other test suite attributes are assumed to be php55 and git with a single
+# redis instance locally on the same server, when not specified.
+suites:
+  - name: community
+    provisioner:
+        client_rb:
+          environment: default_single
+    run_list:
+      - recipe[wrapper::default]
+
+  - name: community-php54
+    provisioner:
+        client_rb:
+          environment: default_single
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      |{.Cookbook.Name}|:
+        php:
+          version: 'php54'
+
+
+  - name: community-redis
+    provisioner:
+        client_rb:
+          environment: default_expanded
+    run_list:
+      - recipe[wrapper::default_expanded]
+
+<% if ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+  - name: enterprise
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'git'
+        git_repository: 'git@github.com:racker/enterprise-magento-chef-demo.git'
+        git_revision: 'v1.14.0.1'
+        git_deploykey: <%= ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+
+  - name: enterprise-redis
+    run_list:
+      - recipe[wrapper::default_expanded]
+    attributes:
+      rackspace:
+        cloud_credentials:
+          username: 'rackops'
+          api_key: <%= ENV['RACKSPACE_API_KEY'] %>
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'git'
+        git_repository: 'git@github.com:racker/enterprise-magento-chef-demo.git'
+        git_revision: 'v1.14.0.1'
+        git_deploykey: <%= ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+
+  - name: enterprise-php54
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      rackspace:
+        cloud_credentials:
+          username: 'rackops'
+          api_key: <%= ENV['RACKSPACE_API_KEY'] %>
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'git'
+        git_repository: 'git@github.com:racker/enterprise-magento-chef-demo.git'
+        git_revision: 'v1.14.0.1'
+        git_deploykey: <%= ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+        php:
+          version: 'php54'
+
+  - name: enterprise-v113
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      rackspace:
+        cloud_credentials:
+          username: 'rackops'
+          api_key: <%= ENV['RACKSPACE_API_KEY'] %>
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'git'
+        git_repository: 'git@github.com:racker/enterprise-magento-chef-demo.git'
+        git_revision: 'v1.13.1.0'
+        git_deploykey: <%= ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+
+  - name: enterprise-php54-v113
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      rackspace:
+        cloud_credentials:
+          username: 'rackops'
+          api_key: <%= ENV['RACKSPACE_API_KEY'] %>
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'git'
+        git_repository: 'git@github.com:racker/enterprise-magento-chef-demo.git'
+        git_revision: 'v1.13.1.0-php54'
+        git_deploykey: <%= ENV['RACKSPACE_MAGENTOSTACK_DEPLOYKEY'] %>
+        php:
+          version: 'php54'
+<% end %>
+<% if ENV['RACKSPACE_API_KEY'] %>
+  - name: enterprise-cloudfiles
+    run_list:
+      - recipe[wrapper::default]
+    attributes:
+      rackspace:
+        cloud_credentials:
+          username: 'rackops'
+          api_key: <%= ENV['RACKSPACE_API_KEY'] %>
+      |{.Cookbook.Name}|:
+        flavor: 'enterprise'
+        install_method: 'cloudfiles'
+        download_file: 'magento-ee-1.14.0.1.tar.gz'
+        checksum: '1e3657778ecac9f1d0470326afdaddad36a88e2fa58b650749eb35d446e71868'
+<% end %>
