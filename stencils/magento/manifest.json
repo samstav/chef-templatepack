@@ -13,6 +13,26 @@
   "berks_dependencies": {
     "redisio": {
       "git": "git@github.com:brianbianco/redisio.git"
+    },
+    "disable_ipv6": {
+      "path": "test/fixtures/cookbooks/disable_ipv6"
+    },
+    "wrapper": {
+      "path": "test/fixtures/cookbooks/wrapper"
+    },
+    "ark": {
+      "git": "https://github.com/burtlo/ark.git",
+      "ref": "1f7c092ffe80073409bce7fa851346fb076a259f"
+    },
+    "openssl": {
+      "git": "https://github.com/racker/openssl.git"
+    },
+    "kibana": {
+      "git": "git@github.com:lusis/chef-kibana.git",
+      "branch": "KIBANA3"
+    },
+    "newrelic_plugins": {
+      "git": "git@github.com:rackspace-cookbooks/newrelic_plugins_chef.git"
     }
   },
   "options": {
@@ -24,18 +44,64 @@
   "stencils": {
     "default": {
       "files": {
-        "recipes/newrelic.rb": "recipes/newrelic.rb",
-        "recipes/nfs_client.rb": "recipes/nfs_client.rb",
-        "recipes/nfs_server.rb": "recipes/nfs_server.rb",
-        "recipes/redis_configure.rb": "recipes/redis_configure.rb",
-        "recipes/redis_object.rb": "recipes/redis_object.rb",
-        "recipes/redis_object_slave.rb": "recipes/redis_object_slave.rb",
-        "recipes/redis_page.rb": "recipes/redis_page.rb",
-        "recipes/redis_page_slave.rb": "recipes/redis_page_slave.rb",
-        "recipes/redis_sentinel.rb": "recipes/redis_sentinel.rb",
-        "recipes/redis_session.rb": "recipes/redis_session.rb",
-        "recipes/redis_session_slave.rb": "recipes/redis_session_slave.rb",
-        "recipes/redis_single.rb": "recipes/redis_single.rb"
+	".rubocop.yml": ".rubocop.yml",
+	"LICENSE": "LICENSE",
+	"CHANGELOG.md": "CHANGELOG.md",
+	"checkmate.yaml": "checkmate.yaml",
+	"manifest.json": "manifest.json",
+	"Gemfile": "Gemfile",
+	"Chefmap": "Chefmap",
+	"CONTRIBUTING.md": "CONTRIBUTING.md",
+	".kitchen.yml": ".kitchen.yml",
+	".gitignore": ".gitignore",
+	"Guardfile": "Guardfile",
+	"Thorfile": "Thorfile",
+	"Rakefile": "Rakefile",
+	"chefignore": "chefignore",
+	"attributes/apache-fpm.rb": "attributes/apache-fpm.rb",
+	"attributes/backups.rb": "attributes/backups.rb",
+	"attributes/default.rb": "attributes/default.rb",
+	"attributes/magento.rb": "attributes/magento.rb",
+	"attributes/monitoring.rb": "attributes/monitoring.rb",
+	"attributes/php_fpm.rb": "attributes/php_fpm.rb",
+	"attributes/redis.rb": "attributes/redis.rb",
+	"files/check-magento-installed.php": "files/check-magento-installed.php",
+	"files/enable-magento-fpc.php": "files/enable-magento-fpc.php",
+	"libraries/util.rb": "libraries/util.rb",
+	"recipes/apache-fpm.rb": "recipes/apache-fpm.rb",
+	"recipes/default.rb": "recipes/default.rb",
+	"recipes/_find_mysql.rb": "recipes/_find_mysql.rb",
+	"recipes/format_disk.rb": "recipes/format_disk.rb",
+	"recipes/gluster.rb": "recipes/gluster.rb",
+	"recipes/magento_admin.rb": "recipes/magento_admin.rb",
+	"recipes/magento_configure.rb": "recipes/magento_configure.rb",
+	"recipes/_magento_fpc.rb": "recipes/_magento_fpc.rb",
+	"recipes/magento_install.rb": "recipes/magento_install.rb",
+	"recipes/mysql_add_drive.rb": "recipes/mysql_add_drive.rb",
+	"recipes/mysql_holland.rb": "recipes/mysql_holland.rb",
+	"recipes/_mysql_logging.rb": "recipes/_mysql_logging.rb",
+	"recipes/mysql_master.rb": "recipes/mysql_master.rb",
+	"recipes/mysql_slave.rb": "recipes/mysql_slave.rb",
+	"recipes/newrelic.rb": "recipes/newrelic.rb",
+	"recipes/nfs_client.rb": "recipes/nfs_client.rb",
+	"recipes/nfs_server.rb": "recipes/nfs_server.rb",
+	"recipes/redis_configure.rb": "recipes/redis_configure.rb",
+	"recipes/redis_object.rb": "recipes/redis_object.rb",
+	"recipes/redis_object_slave.rb": "recipes/redis_object_slave.rb",
+	"recipes/redis_page.rb": "recipes/redis_page.rb",
+	"recipes/redis_page_slave.rb": "recipes/redis_page_slave.rb",
+	"recipes/redis_sentinel.rb": "recipes/redis_sentinel.rb",
+	"recipes/redis_session.rb": "recipes/redis_session.rb",
+	"recipes/redis_session_slave.rb": "recipes/redis_session_slave.rb",
+	"recipes/redis_single.rb": "recipes/redis_single.rb",
+	"recipes/redis_single_slave.rb": "recipes/redis_single_slave.rb",
+	"recipes/varnish.rb": "recipes/varnish.rb",
+	"templates/default/apache2/magento_vhost.erb": "templates/default/apache2/magento_vhost.erb",
+	"templates/default/cloud-monitoring/monitoring-remote-http.yaml.erb": "templates/default/cloud-monitoring/monitoring-remote-http.yaml.erb",
+	"templates/default/fastcgi.conf.erb": "templates/default/fastcgi.conf.erb",
+	"templates/default/git_ssh_wrapper.sh.erb": "templates/default/git_ssh_wrapper.sh.erb",
+	"templates/default/magento.sh.erb": "templates/default/magento.sh.erb",
+	"templates/default/mysql/my.cnf.erb": "templates/default/mysql/my.cnf.erb"
       }
     }
   }
