@@ -1,6 +1,6 @@
 # Encoding: utf-8
 #
-# Cookbook Name:: magentostack
+# Cookbook Name:: |{.Cookbook.Name}|
 # Recipe:: holland
 #
 # Copyright 2014, Rackspace Hosting
@@ -17,4 +17,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default['magentostack']['rackspace_cloudbackup']['http_docroot']['enable'] = false
+default['|{.Cookbook.Name}|']['rackspace_cloudbackup']['http_docroot']['enable'] = false

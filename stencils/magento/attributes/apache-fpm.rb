@@ -3,26 +3,26 @@
 # default['apache']['mod_fastcgi']['download_url'] = 'http://www.fastcgi.com/dist/mod_fastcgi-SNAP-0910052141.tar.gz'
 
 # Configure default Magento Vhosts
-default['magentostack']['web']['domain'] = 'localhost'
-default['magentostack']['web']['http_port'] = '80'
-default['magentostack']['web']['https_port'] = '443'
-default['magentostack']['web']['server_aliases'] = node['fqdn']
-default['magentostack']['web']['ssl_autosigned'] = true
-default['magentostack']['web']['cookbook'] = 'magentostack'
-default['magentostack']['web']['template'] = 'apache2/magento_vhost.erb'
-default['magentostack']['web']['fastcgi_cookbook'] = 'magentostack'
-default['magentostack']['web']['fastcgi_template'] = 'apache2/fastcgi.conf'
-default['magentostack']['web']['dir'] = "#{node['apache']['docroot_dir']}/magento"
+default['|{.Cookbook.Name}|']['web']['domain'] = 'localhost'
+default['|{.Cookbook.Name}|']['web']['http_port'] = '80'
+default['|{.Cookbook.Name}|']['web']['https_port'] = '443'
+default['|{.Cookbook.Name}|']['web']['server_aliases'] = node['fqdn']
+default['|{.Cookbook.Name}|']['web']['ssl_autosigned'] = true
+default['|{.Cookbook.Name}|']['web']['cookbook'] = '|{.Cookbook.Name}|'
+default['|{.Cookbook.Name}|']['web']['template'] = 'apache2/magento_vhost.erb'
+default['|{.Cookbook.Name}|']['web']['fastcgi_cookbook'] = '|{.Cookbook.Name}|'
+default['|{.Cookbook.Name}|']['web']['fastcgi_template'] = 'apache2/fastcgi.conf'
+default['|{.Cookbook.Name}|']['web']['dir'] = "#{node['apache']['docroot_dir']}/magento"
 
-site_name = node['magentostack']['web']['domain']
-default['magentostack']['web']['ssl_key'] = "#{node['apache']['dir']}/ssl/#{site_name}.key"
-default['magentostack']['web']['ssl_cert'] = "#{node['apache']['dir']}/ssl/#{site_name}.pem"
+site_name = node['|{.Cookbook.Name}|']['web']['domain']
+default['|{.Cookbook.Name}|']['web']['ssl_key'] = "#{node['apache']['dir']}/ssl/#{site_name}.key"
+default['|{.Cookbook.Name}|']['web']['ssl_cert'] = "#{node['apache']['dir']}/ssl/#{site_name}.pem"
 
 # Install php dependencies for Magento
-default['magentostack']['php']['version'] = 'php55'
+default['|{.Cookbook.Name}|']['php']['version'] = 'php55'
 case node['platform_family']
 when 'rhel'
-  default['magentostack']['php55']['packages'] = %w(
+  default['|{.Cookbook.Name}|']['php55']['packages'] = %w(
     php55u-gd
     php55u-mysqlnd
     php55u-mcrypt
@@ -33,7 +33,7 @@ when 'rhel'
     php55u-opcache
   )
 
-  default['magentostack']['php54']['packages'] = %w(
+  default['|{.Cookbook.Name}|']['php54']['packages'] = %w(
     php54-gd
     php54-mysqlnd
     php54-mcrypt
@@ -45,7 +45,7 @@ when 'rhel'
   )
 ### opcache is built in Php for Ubuntu
 when 'debian'
-  default['magentostack']['php']['packages'] = %w(
+  default['|{.Cookbook.Name}|']['php']['packages'] = %w(
     php5-gd
     php5-mysqlnd
     php5-mcrypt
@@ -78,9 +78,9 @@ default['php-fpm']['pools'] = {
   }
 }
 # cloud monitoring
-node.default['magentostack']['web']['monitor']['cookbook'] = 'magentostack'
-node.default['magentostack']['web']['monitor']['template'] = 'cloud-monitoring/monitoring-remote-http.yaml.erb'
-node.default['magentostack']['web']['monitor']['disabled'] = false
-node.default['magentostack']['web']['monitor']['period'] = 60
-node.default['magentostack']['web']['monitor']['timeout'] = 15
-node.default['magentostack']['web']['monitor']['alarm'] = false
+node.default['|{.Cookbook.Name}|']['web']['monitor']['cookbook'] = '|{.Cookbook.Name}|'
+node.default['|{.Cookbook.Name}|']['web']['monitor']['template'] = 'cloud-monitoring/monitoring-remote-http.yaml.erb'
+node.default['|{.Cookbook.Name}|']['web']['monitor']['disabled'] = false
+node.default['|{.Cookbook.Name}|']['web']['monitor']['period'] = 60
+node.default['|{.Cookbook.Name}|']['web']['monitor']['timeout'] = 15
+node.default['|{.Cookbook.Name}|']['web']['monitor']['alarm'] = false

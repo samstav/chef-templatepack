@@ -1,6 +1,6 @@
 # Encoding: utf-8
 #
-# Cookbook Name:: magentostack
+# Cookbook Name:: |{.Cookbook.Name}|
 # Recipe:: monitoring
 #
 # Copyright 2014, Rackspace Hosting
@@ -21,7 +21,7 @@
 # push to be sure we don't reset custom_monitors
 default['platformstack']['cloud_monitoring']['custom_monitors']['name'].push('custom_http')
 default['platformstack']['cloud_monitoring']['custom_monitors']['custom_http']['source'] = 'cloud-monitoring/monitoring-remote-http.yaml.erb'
-default['platformstack']['cloud_monitoring']['custom_monitors']['custom_http']['cookbook'] = 'magentostack'
+default['platformstack']['cloud_monitoring']['custom_monitors']['custom_http']['cookbook'] = '|{.Cookbook.Name}|'
 default['platformstack']['cloud_monitoring']['custom_monitors']['custom_http']['variables'] = {
   disabled: false,
   alarm: false,

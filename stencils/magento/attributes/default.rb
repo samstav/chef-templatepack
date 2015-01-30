@@ -1,6 +1,6 @@
 # Encoding: utf-8
 #
-# Cookbook Name:: magentostack
+# Cookbook Name:: |{.Cookbook.Name}|
 # Recipe:: default
 #
 # Copyright 2014, Rackspace UK, Ltd.
@@ -24,12 +24,12 @@ default['xml']['compiletime'] = true
 
 # Stack_commons configuration attributes
 # should not be changed
-default['stack_commons']['stackname'] = 'magentostack'
-default['magentostack']['db-autocreate']['enabled'] = false
-default['magentostack']['demo']['enabled'] = false
-default['magentostack']['mysql']['databases'] = {}
-default['magentostack']['varnish']['backend_nodes'] = {}
-default['magentostack']['varnish']['multi'] = true
+default['stack_commons']['stackname'] = '|{.Cookbook.Name}|'
+default['|{.Cookbook.Name}|']['db-autocreate']['enabled'] = false
+default['|{.Cookbook.Name}|']['demo']['enabled'] = false
+default['|{.Cookbook.Name}|']['mysql']['databases'] = {}
+default['|{.Cookbook.Name}|']['varnish']['backend_nodes'] = {}
+default['|{.Cookbook.Name}|']['varnish']['multi'] = true
 
 # Toggle newrelic application monitoring
 default['stack_commons']['application_monitoring']['php']['enabled'] = true
@@ -42,14 +42,14 @@ default['php']['packages'] = []
 
 # MySQL
 default['mysql']['version'] = '5.6'
-default['mysql-multi']['templates']['my.cnf']['cookbook'] = 'magentostack'
+default['mysql-multi']['templates']['my.cnf']['cookbook'] = '|{.Cookbook.Name}|'
 default['mysql-multi']['templates']['my.cnf']['source'] = 'mysql/my.cnf.erb'
 
 # search query for discovery of nfs server
-default['magentostack']['nfs_server']['export_name'] = 'magento_media'
-default['magentostack']['nfs_server']['export_root'] = '/export'
-default['magentostack']['nfs_server']['discovery_query'] = "tags:magentostack_nfs_server AND chef_environment:#{node.chef_environment}"
+default['|{.Cookbook.Name}|']['nfs_server']['export_name'] = 'magento_media'
+default['|{.Cookbook.Name}|']['nfs_server']['export_root'] = '/export'
+default['|{.Cookbook.Name}|']['nfs_server']['discovery_query'] = "tags:|magento_nfs_server AND chef_environment:#{node.chef_environment}"
 
 # clients
-default['magentostack']['nfs_client']['mount_point'] = '/mnt/magento_media'
-default['magentostack']['nfs_client']['symlink_target'] = 'media' # within /var/www/html/magento
+default['|{.Cookbook.Name}|']['nfs_client']['mount_point'] = '/mnt/magento_media'
+default['|{.Cookbook.Name}|']['nfs_client']['symlink_target'] = 'media' # within /var/www/html/magento
