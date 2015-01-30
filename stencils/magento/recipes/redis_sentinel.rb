@@ -22,7 +22,7 @@
 include_recipe 'chef-sugar'
 
 # find a master to watch
-master_name, master_ip, master_port = MagentokUtil.best_redis_session_master(node)
+master_name, master_ip, master_port = MagentoUtil.best_redis_session_master(node)
 unless master_name && master_ip && master_port
   Chef::Log.warn('|{.Cookbook.Name}|::redis_sentinel did not find a redis single master to configure a redis slave, not proceeding')
   return
