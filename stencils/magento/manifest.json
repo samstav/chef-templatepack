@@ -3,6 +3,9 @@
   "api": 1,
   "default_stencil": "default",
   "dependencies": [
+    "apt",
+    "chef-sugar",
+    "nfs"
   ],
   "options": {
     "name": {
@@ -13,6 +16,8 @@
   "stencils": {
     "default": {
       "files": {
+        "recipes/nfs_client.rb": "recipes/nfs_client.rb",
+        "recipes/nfs_server.rb": "recipes/nfs_server.rb"
       }
     }
   }
