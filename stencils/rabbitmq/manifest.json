@@ -2,10 +2,10 @@
   "id": "rabbitmq",
   "api": 1,
   "default_stencil": "generic",
-  "dependencies": [
-    "rackspace_iptables",
-    "rabbitmq"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "rabbitmq": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",

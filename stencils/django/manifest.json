@@ -2,13 +2,13 @@
   "id": "django",
   "api": 1,
   "default_stencil": "nginx",
-  "dependencies": [
-    "rackspace_iptables",
-    "chef-sugar",
-    "application",
-    "application_python",
-    "python"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "chef-sugar": {},
+    "application": {},
+    "application_python": {},
+    "python": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
@@ -66,9 +66,9 @@
           "default": "node['nginx']['group']"
         }
       },
-      "dependencies": [
-        "nginx"
-      ],
+      "dependencies": {
+        "nginx": {}
+      },
       "directories": [
         "templates/default/nginx/sites"
       ]

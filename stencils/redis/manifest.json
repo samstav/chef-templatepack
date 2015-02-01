@@ -2,10 +2,10 @@
   "id": "redis",
   "api": 1,
   "default_stencil": "single",
-  "dependencies": [
-    "rackspace_iptables",
-    "redis-multi"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "redis-multi": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",

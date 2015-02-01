@@ -2,8 +2,8 @@
   "id": "utility",
   "api": 1,
   "default_stencil": "empty",
-  "dependencies": [
-  ],
+  "dependencies": {
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
@@ -16,11 +16,11 @@
   },
   "stencils": {
     "default": {
-      "dependencies": [
-        "sudo",
-        "users",
-        "rackops_rolebook"
-      ],
+      "dependencies": {
+        "sudo": {},
+        "users": {},
+        "rackops_rolebook": {}
+      },
       "files": {
         "recipes/<NAME>.rb": "recipes/default.rb",
         "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/default_spec.rb"
