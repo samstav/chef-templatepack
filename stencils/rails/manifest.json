@@ -2,12 +2,12 @@
   "id": "rails",
   "api": 1,
   "default_stencil": "nginx",
-  "dependencies": [
-    "rackspace_iptables",
-    "chef-sugar",
-    "application",
-    "rbenv"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "chef-sugar": {},
+    "application": {},
+    "rbenv": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
@@ -56,9 +56,9 @@
   },
   "stencils": {
     "nginx": {
-      "dependencies": [
-        "nginx"
-      ],
+      "dependencies": {
+        "nginx": {}
+      },
       "files": {
         "recipes/_ruby_common.rb": "recipes/_ruby_common.rb",
         "recipes/<NAME>.rb": "recipes/rails_nginx.rb",

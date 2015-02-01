@@ -2,10 +2,10 @@
   "id": "memcached",
   "default_stencil": "default",
   "api": 1,
-  "dependencies": [
-    "rackspace_iptables",
-    "memcached"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "memcached": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",

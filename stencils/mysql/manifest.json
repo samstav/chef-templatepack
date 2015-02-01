@@ -2,11 +2,11 @@
   "id": "mysql",
   "default_stencil": "mysql_master",
   "api": 1,
-  "dependencies": [
-    "rackspace_iptables",
-    "mysql-multi",
-    "database"
-  ],
+  "dependencies": {
+    "rackspace_iptables": {},
+    "mysql-multi": {},
+    "database": {}
+  },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
