@@ -22,6 +22,9 @@
     },
     "mysql": {
       "help": "Creates some MySQL recipes"
+    },
+    "newrelic": {
+      "help": "Basic newrelic"
     }
   },
   "base": {
