@@ -53,7 +53,7 @@ openfor = search(:node, "chef_environment:#{node.chef_environment} AND tags:|{.O
 
 unless openfor.empty?
   openfor.each do |n|
-    node.default['postgresql']['pg_ba'] << {
+    node.default['postgresql']['pg_hba'] << {
       comment: "# authorize #{n.name}",
       type: 'host',
       db: |{ .QString .Options.Database }|,
@@ -70,20 +70,20 @@ end
 |{ if eq .Options.Openfor "environment" }|
 search_add_iptables_rules("chef_environment:#{node.chef_environment}",
                           'INPUT',
-                          "-m #{proto} -p #{proto} --dport #{node['memcached']['port']} -j ACCEPT",
+                          "-m #{proto} -p #{proto} --dport #{node['postgresql']['config']['port']} -j ACCEPT",
                           9999,
-                          'Open port for memcached')
+                          'Open port for postgres')
 |{ else if eq .Options.Openfor "all" }|
 search_add_iptables_rules("nodes:*",
                           'INPUT',
-                          "-m #{proto} -p #{proto} --dport #{node['memcached']['port']} -j ACCEPT",
+                          "-m #{proto} -p #{proto} --dport #{node['postgresql']['config']['port']} -j ACCEPT",
                           9999,
-                          'Open port for memcached')
+                          'Open port for postgres')
 |{ else }|
 search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{.Options.Openfor}|",
                           'INPUT',
-                          "-m #{proto} -p #{proto} --dport #{node['memcached']['port']} -j ACCEPT",
+                          "-m #{proto} -p #{proto} --dport #{node['postgresql']['config']['port']} -j ACCEPT",
                           9999,
-                          'Open port for memcached')
+                          'Open port for postgres')
 |{ end }|
 |{ end }|
