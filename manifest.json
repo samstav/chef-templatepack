@@ -25,6 +25,9 @@
     },
     "newrelic": {
       "help": "Basic newrelic"
+    },
+    "postgres": {
+      "help": "Creates a postgres recipe"
     }
   },
   "base": {
