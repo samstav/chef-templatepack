@@ -1,0 +1,25 @@
+{
+  "id": "nodejs",
+  "api": 1,
+  "default_stencil": "nodejs",
+  "dependencies": {
+    "nodejs": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_nodejs"
+    }
+  },
+  "stencils": {
+    "nodejs": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_nodejs.rb"
+      },
+      "directories": [
+      ],
+      "options": {
+      }
+    }
+  }
+}

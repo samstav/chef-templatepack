@@ -1,0 +1,31 @@
+{
+  "id": "glusterfs",
+  "default_stencil": "glusterfs",
+  "api": 1,
+  "dependencies": {
+    "rackspace_iptables": {},
+    "memcached": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_glusterfs"
+    },
+    "volume_name": {
+      "help": "The name of the first volume",
+      "default": "sharedfs"
+    },
+    "mount_path": {
+      "help": "The directory where we'll mount the first volume",
+      "default": "/var/sharedfs"
+    }
+  },
+  "stencils": {
+    "glusterfs": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_glusterfs.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/glusterfs_spec.rb"
+      }
+    }
+  }
+}

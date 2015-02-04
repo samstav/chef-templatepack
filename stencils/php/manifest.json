@@ -1,0 +1,28 @@
+{
+  "id": "php",
+  "api": 1,
+  "default_stencil": "php",
+  "dependencies": {
+    "apt": {},
+    "composer": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_php"
+    }
+  },
+  "stencils": {
+    "php": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_php.rb",
+        "templates/default/php/php.ini.erb": "templates/default/php/php.ini.erb",
+        "templates/default/php/pool.conf.erb": "templates/default/php/pool.conf.erb",
+        "templates/default/php/php-fpm.conf.erb": "templates/default/php/php-fpm.conf.erb",
+        "templates/default/php/05_opcache.ini.erb": "templates/default/php/05_opcache.ini.erb"
+      },
+      "options": {
+      }
+    }
+  }
+}

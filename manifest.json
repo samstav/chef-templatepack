@@ -28,12 +28,35 @@
     },
     "postgres": {
       "help": "Creates a postgres recipe"
+    },
+    "php": {
+      "help": "Creates a standalone PHP instance"
+    },
+    "nodejs": {
+      "help": "Installs NodeJS and provides an NPM LWRP"
+    },
+    "nginx": {
+      "help": "Creates a standalone Nginx instance"
+    },
+    "mariadb": {
+      "help": "A modern MySQL system"
+    },
+    "glusterfs": {
+      "help": "A GlusterFS Clustering recipe for easy-peasy networked filesystems"
+    },
+    "rackspace_networks": {
+      "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
+    },
+    "wordpress": {
+      "help": "Creates a complete Wordpress Stack including PHP, NGINX, MariaDB, Redis and more"
     }
   },
   "base": {
     "files": [
       ".gitignore",
       ".kitchen.yml",
+      ".editorconfig",
+      ".rubocop.yml",
       "Berksfile",
       "CHANGELOG.md",
       "Gemfile",
@@ -45,7 +68,6 @@
       "test/integration/encrypted_data_bag_secret",
       "test/integration/default/serverspec/spec_helper.rb",
       "test/integration/default/serverspec/default_spec.rb"
-
     ],
     "directories": [
       "attributes",
