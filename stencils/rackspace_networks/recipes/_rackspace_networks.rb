@@ -92,6 +92,7 @@ else
         privatenet = app_node['rackspace']['private_networks'].find do |netwrk|
           netwrk['label'] == node['address_map']['cloud_net_label']
         end
+        next if privatenet.nil?
         best_ip = privatenet['ips'].first['ip']
       end
       # Sometimes, the foriegn node does not have any details yet. This can occur

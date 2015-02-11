@@ -120,6 +120,7 @@ unless Chef::Config[:solo]
         privatenet = raw_node['rackspace']['private_networks'].find do |network|
           network['label'] == node.chef_environment
         end
+        next if privatenet.nil?
         best_ip = privatenet['ips'].first['ip']
       end
       next if best_ip.nil?

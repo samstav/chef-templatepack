@@ -55,7 +55,6 @@
     "files": [
       ".gitignore",
       ".kitchen.yml",
-      ".editorconfig",
       ".rubocop.yml",
       "Berksfile",
       "CHANGELOG.md",
