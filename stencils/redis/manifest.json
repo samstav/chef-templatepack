@@ -1,71 +1,30 @@
 {
   "id": "redis",
+  "default_stencil": "redis",
   "api": 1,
-  "default_stencil": "single",
   "dependencies": {
-    "rackspace_iptables": {},
-    "redis-multi": {}
+    "redisio": {}
   },
   "options": {
     "name": {
       "help": "Name of the recipe to create",
-      "default": "redis"
+      "default": "_redis"
     },
-    "openfor": {
-      "help": "Tag to open the rabbitmq firewall for, if environment is passed it will open for the whole environment"
+    "cache": {
+      "help": "Defaults to true, disables saving and enables LRU key clearing.",
+      "default": "true"
+    },
+    "cluster": {
+      "help": "Defaults to false, set true to enable HAProxy and Redis in Cluster mode",
+      "default": "false"
     }
   },
   "stencils": {
-    "single": {
+    "redis": {
       "files": {
-        "recipes/<NAME>.rb": "recipes/single.rb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/single_spec.rb"
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
-    },
-    "master": {
-      "files": {
-        "recipes/<NAME>.rb": "recipes/master.rb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/master_spec.rb"
-      },
-      "options": {
-        "name": {
-          "default": "redis_master"
-        }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
-    },
-    "slave": {
-      "files": {
-        "recipes/<NAME>.rb": "recipes/slave.rb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/slave_spec.rb"
-      },
-      "options": {
-        "name": {
-          "default": "redis_slave"
-        }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
-    },
-    "sentinel": {
-      "files": {
-        "recipes/<NAME>.rb": "recipes/sentinel.rb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/sentinel_spec.rb"
-      },
-      "options": {
-        "name": {
-          "default": "redis_sentinel"
-        }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
+        "recipes/<NAME>.rb": "recipes/_redis.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/redis_spec.rb"
+      }
     }
   }
 }

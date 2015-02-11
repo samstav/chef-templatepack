@@ -1,0 +1,30 @@
+{
+  "id": "mariadb",
+  "default_stencil": "mariadb",
+  "api": 1,
+  "dependencies": {
+    "database": {},
+    "apt": {},
+    "ulimit": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_mariadb"
+    }
+  },
+  "stencils": {
+    "mariadb": {
+      "options": {
+      },
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_mariadb.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/mariadb_spec.rb",
+        "templates/default/mariadb/.my.cnf.erb": "templates/default/.my.cnf.erb",
+        "templates/default/mariadb/constants.sql.erb": "templates/default/constants.sql.erb",
+        "templates/default/mariadb/my.cnf.erb": "templates/default/my.cnf.erb",
+        "templates/default/mariadb/server-seed.erb": "templates/default/server-seed.erb"
+      }
+    }
+  }
+}

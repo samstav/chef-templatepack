@@ -1,0 +1,32 @@
+<?php
+define( 'DB_NAME',     '<%= @db_name %>' );
+define( 'DB_USER',     '<%= @db_user %>' );
+define( 'DB_PASSWORD', '<%= @db_password %>' );
+define( 'DB_HOST',     '<%= @db_host %>' );
+define( 'DB_CHARSET',  'utf8' );
+
+$table_prefix = 'wp_';
+
+define( 'AUTH_KEY',         'Go ahead and change me ook?' );
+define( 'SECURE_AUTH_KEY',  'Go ahead and change me ook?' );
+define( 'LOGGED_IN_KEY',    'Go ahead and change me ook?' );
+define( 'NONCE_KEY',        'Go ahead and change me ook?' );
+define( 'AUTH_SALT',        'Go ahead and change me ook?' );
+define( 'SECURE_AUTH_SALT', 'Go ahead and change me ook?' );
+define( 'LOGGED_IN_SALT',   'Go ahead and change me ook?' );
+define( 'NONCE_SALT',       'Go ahead and change me ook?' );
+
+define( 'WPLANG', '' );
+
+define('WP_HOME','http://'. $_SERVER['SERVER_NAME']);
+define('WP_SITEURL','http://'. $_SERVER['SERVER_NAME']);
+
+define('WP_CACHE_KEY_SALT', 'musiccom');
+define('WP_CACHE', true);
+
+$redis_server = array( 'host' => '127.0.0.1', 'port' => 6379);
+
+if ( !defined('ABSPATH') )
+    define('ABSPATH', dirname(__FILE__) . '/');
+
+require_once(ABSPATH . 'wp-settings.php');
