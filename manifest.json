@@ -48,7 +48,10 @@
       "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
     },
     "wordpress": {
-      "help": "Creates a complete Wordpress Stack including PHP, NGINX, MariaDB, Redis and more"
+      "help": "Creates an example Wordpress application"
+    },
+    "drupal": {
+      "help": "Creates an example Drupal application"
     }
   },
   "base": {
