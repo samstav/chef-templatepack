@@ -23,11 +23,11 @@ rabbit_nodes.each do |rabbit_node|
 end
 
 node.default['rabbitmq']['cluster'] = true
-node.default['rabbitmq']['cluster'] = cluster_nodes
+node.default['rabbitmq']['cluster_disk_nodes'] = cluster_nodes
 |{ end }|
 
 include_recipe 'rabbitmq'
 
 |{ if ne .Options.Openfor "" }|
-search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{.Options.Openfor}|", 'INPUT', "-m tcp -p tcp --dport #{node['rabbitmq']['port']} -j ACCEPT", 70, 'access to rabbitmq')
+search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{.Options.Openfor}|", 'INPUT', "-p tcp --dport #{node['rabbitmq']['port']} -j ACCEPT", 70, 'access to rabbitmq')
 |{ end }|
