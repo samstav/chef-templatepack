@@ -1,0 +1,36 @@
+{
+  "id": "varnish",
+  "api": 1,
+  "default_stencil": "varnish",
+  "dependencies": {
+    "apt": {},
+    "yum": {},
+    "ulimit": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_varnish"
+    },
+    "example": {
+      "help": "Various premade Nginx examples",
+      "default": "basic"
+    },
+    "package_manager": {
+      "help": "Which package manager to provide and example for - Choose 'apt'/'yum'",
+      "default": "apt"
+    }
+  },
+  "stencils": {
+    "varnish": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_varnish.rb.jinja2",
+        "templates/default/varnish/default.vcl.erb": "templates/default/default.vcl.erb",
+        "templates/default/varnish/varnish.erb": "templates/default/varnish.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/varnish_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "rackspace_networks",
+  "default_stencil": "rackspace_networks",
+  "api": 1,
+  "dependencies": {
+    "hostsfile": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_rackspace_networks"
+    }
+  },
+  "stencils": {
+    "rackspace_networks": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_rackspace_networks.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/rackspace_networks_spec.rb"
+      }
+    }
+  }
+}
