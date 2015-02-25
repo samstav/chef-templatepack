@@ -1,0 +1,23 @@
+{
+  "id": "statsd",
+  "api": 1,
+  "default_stencil": "statsd",
+  "dependencies": {
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_statsd"
+    }
+  },
+  "stencils": {
+    "statsd": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_statsd.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/statsd_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

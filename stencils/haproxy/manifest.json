@@ -1,0 +1,29 @@
+{
+  "id": "haproxy",
+  "api": 1,
+  "default_stencil": "haproxy",
+  "dependencies": {
+    "apt": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_haproxy"
+    },
+    "package_manager": {
+      "help": "Which package manager to provide and example for - Choose 'apt'/'yum'",
+      "default": "apt"
+    }
+  },
+  "stencils": {
+    "haproxy": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_haproxy.rb.jinja2",
+        "templates/default/haproxy/haproxy.cfg.erb": "templates/default/haproxy.cfg.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/haproxy_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

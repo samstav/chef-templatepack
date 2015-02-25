@@ -1,0 +1,24 @@
+{
+  "id": "graphite",
+  "api": 1,
+  "default_stencil": "graphite",
+  "dependencies": {
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_graphite"
+    }
+  },
+  "stencils": {
+    "graphite": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_graphite.rb",
+        "templates/default/nginx/graphite.conf.erb": "templates/default/graphite.conf.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/graphite_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

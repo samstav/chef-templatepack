@@ -1,0 +1,33 @@
+{
+  "id": "php",
+  "api": 1,
+  "default_stencil": "php",
+  "dependencies": {
+    "apt": {},
+    "yum": {},
+    "composer": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_php"
+    },
+    "package_manager": {
+      "help": "Which package manager to provide and example for - Choose 'apt'/'yum'",
+      "default": "apt"
+    }
+  },
+  "stencils": {
+    "php": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_php.rb.jinja2",
+        "templates/default/php/php.ini.erb": "templates/default/php/php.ini.erb",
+        "templates/default/php/pool.conf.erb": "templates/default/php/pool.conf.erb",
+        "templates/default/php/php-fpm.conf.erb": "templates/default/php/php-fpm.conf.erb",
+        "templates/default/php/05_opcache.ini.erb": "templates/default/php/05_opcache.ini.erb"
+      },
+      "options": {
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "apache",
+  "api": 1,
+  "default_stencil": "apache",
+  "dependencies": {
+    "rackspace_iptables": {},
+    "ulimit": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_apache"
+    },
+    "package_manager": {
+      "help": "Which package manager to provide and example for - Choose 'apt'/'yum'",
+      "default": "apt"
+    }
+  },
+  "stencils": {
+    "apache": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_apache.rb.jinja2",
+        "templates/default/apache/apache2.conf.erb": "templates/default/apache2.conf.erb",
+        "templates/default/apache/mpm_event.conf.erb": "templates/default/mpm_event.conf.erb",
+        "templates/default/apache/ports.conf.erb": "templates/default/ports.conf.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/apache_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

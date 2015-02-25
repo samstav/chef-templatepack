@@ -1,0 +1,59 @@
+#
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
+#
+# Copyright |{ cookbook['year'] }|, Rackspace
+#
+
+node.default['ha-redis']['haproxy_port'] = 6379
+node.default['ha-redis']['redis_port'] = 6380
+
+# If you're not using the rackspace_networks helper, you'll want to define your
+# app_nodes here. Ensure it's a list of IP addresses.
+if node['address_map'].nil?
+  my_ip = '0.0.0.0'
+  app_nodes = [my_ip]
+else
+  my_ip = node['address_map']['my_ip']
+  if tagged?('redis')
+    node.default['address_map']['redis_masters'] << my_ip
+  end
+  if node['address_map']['redis_masters'].length == 0
+    app_nodes = [my_ip]
+  else
+    app_nodes = node['address_map']['redis_masters']
+  end
+end
+
+{% if options['package_manager'] == "apt" %}
+apt_repository 'haproxy' do
+  uri 'ppa:vbernat/haproxy-1.5'
+  distribution node['lsb']['codename']
+  key '1C61B9CD'
+  keyserver 'hkp://keyserver.ubuntu.com:80'
+  action :add
+end
+{% else %}
+# TODO: CentOS Support
+{% endif %}
+
+package 'haproxy' do
+  action [:upgrade, :install]
+end
+
+template '/etc/haproxy/haproxy.cfg' do
+  source 'haproxy/haproxy.cfg.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    app_nodes: app_nodes
+  )
+  notifies :restart, 'service[haproxy]'
+end
+
+service 'haproxy' do
+  supports restart: true, status: true, reload: true
+  action [:enable, :start]
+end

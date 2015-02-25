@@ -1,0 +1,24 @@
+{
+  "id": "ruby",
+  "api": 1,
+  "default_stencil": "ruby",
+  "dependencies": {
+    "rbenv": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_ruby"
+    }
+  },
+  "stencils": {
+    "ruby": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_ruby.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/ruby_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

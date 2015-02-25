@@ -1,0 +1,121 @@
+#
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
+#
+# Copyright |{ cookbook['year'] }|, Rackspace
+#
+
+# Where should we store sessions?
+if node['address_map'].nil?
+  session_store = '127.0.0.1:6379'
+else
+  if node['ha-redis'].nil?
+    session_store = "#{node['address_map']['my_ip']}:6379"
+  else
+    session_store = "#{node['address_map']['my_ip']}:#{node['ha-redis']['haproxy_port']}"
+  end
+end
+
+php5_packages = %w(intl fpm mysql gd curl redis memcached imagick)
+
+{% if options['package_manager'] == "apt" %}
+# Add the 5.6 repo
+apt_repository 'php5.6' do
+  uri 'ppa:ondrej/php5-5.6'
+  distribution node['lsb']['codename']
+  keyserver 'hkp://keyserver.ubuntu.com:80'
+  key 'E5267A6C'
+end
+# Install PHP
+package 'python-software-properties'
+php5_packages.each do |pkg|
+  package "php5-#{pkg}" do
+    options '--force-yes'
+    options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
+    action [:upgrade, :install]
+  end
+end
+{% else %}
+yum_repository 'epel' do
+  description 'Extra Packages for Enterprise Linux'
+  mirrorlist 'http://mirrors.fedoraproject.org/mirrorlist?repo=epel-6&arch=$basearch'
+  gpgkey 'http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6'
+  action :create
+end
+php5_packages.each do |pkg|
+  package "php56w-#{pkg}" do
+    action [:upgrade, :install]
+  end
+end
+{% endif %}
+
+# Configure OP cache template
+template '/etc/php5/mods-available/opcache.ini' do
+  source 'php/05_opcache.ini.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  notifies :restart, 'service[php5-fpm]'
+end
+
+# PHP FPM pool
+template '/etc/php5/fpm/pool.d/www.conf' do
+  source 'php/pool.conf.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  notifies :restart, 'service[php5-fpm]'
+end
+
+# PHP.ini
+template '/etc/php5/fpm/php.ini' do
+  source 'php/php.ini.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    redis_local: session_store,
+    memory_limit: 128
+  )
+  notifies :restart, 'service[php5-fpm]'
+end
+template '/etc/php5/cli/php.ini' do
+  source 'php/php.ini.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    redis_local: session_store,
+    memory_limit: 1024
+  )
+end
+
+# PHP-FPM configuration
+template '/etc/php5/fpm/php-fpm.conf' do
+  source 'php/php-fpm.conf.erb'
+  cookbook cookbook_name
+  owner 'root'
+  group 'root'
+  mode '0644'
+  notifies :restart, 'service[php5-fpm]'
+end
+
+# Ensure PHP-FPM is running
+{% if options['package_manager'] == "apt" %}
+service 'php5-fpm' do
+  service_name 'php5-fpm'
+  provider Chef::Provider::Service::Upstart
+  supports restart: true, status: true
+  action [:enable, :start]
+end
+{% else %}
+service 'php5-fpm' do
+  service_name 'php5-fpm'
+  supports restart: true, status: true
+  action [:enable, :start]
+end
+{% endif %}

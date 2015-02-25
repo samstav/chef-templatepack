@@ -1,0 +1,107 @@
+{
+  "api": 1,
+  "framework": "chef",
+  "stencil_sets": {
+    "rails": {
+      "help": "Creates a rails application recipe based on the type, defaults to Apache"
+    },
+    "redis": {
+      "help": "Creates a redis recipe"
+    },
+    "ha-redis": {
+      "help": "Creates a highly available Redis & HAProxy recipe"
+    },
+    "memcached": {
+      "help": "Creates a memcached recipe"
+    },
+    "utility": {
+      "help": "Creates some helpful utility recipes"
+    },
+    "mysql": {
+      "help": "Creates some MySQL recipes"
+    },
+    "newrelic": {
+      "help": "Basic newrelic"
+    },
+    "postgres": {
+      "help": "Creates a postgres recipe"
+    },
+    "php": {
+      "help": "Creates a standalone PHP instance"
+    },
+    "nodejs": {
+      "help": "Installs NodeJS and provides an NPM LWRP"
+    },
+    "nginx": {
+      "help": "Creates a standalone Nginx instance"
+    },
+    "apache": {
+      "help": "Creates a recipe for installing and tuning Apache2.4"
+    },
+    "mariadb": {
+      "help": "A modern MySQL system"
+    },
+    "mariadb-galera": {
+      "help": "A modern MariaDB powered Galera Cluster"
+    },
+    "glusterfs": {
+      "help": "A GlusterFS Clustering recipe for easy-peasy networked filesystems"
+    },
+    "rackspace_networks": {
+      "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
+    },
+    "wordpress": {
+      "help": "Creates an example Wordpress application"
+    },
+    "drupal": {
+      "help": "Creates an example Drupal application"
+    },
+    "application-php": {
+      "help": "Creates an example PHP application"
+    },
+    "ruby": {
+      "help": "Creates a recipe for installing ruby via RBENV"
+    },
+    "varnish": {
+      "help": "Creates a recipe for installing Varnish"
+    },
+    "statsd": {
+      "help": "Creates a StatsD server recipe - required NodeJS"
+    },
+    "graphite": {
+      "help": "Creates a Graphite instance"
+    },
+    "elk": {
+      "help": "Creates an ElasticSearch, LogStash and Kibana example recipe"
+    },
+    "haproxy": {
+      "help": "Creates a basic HAProxy recipe"
+    }
+  },
+  "base": {
+    "files": [
+      ".gitignore",
+      ".kitchen.yml",
+      ".rubocop.yml",
+      "Berksfile",
+      "CHANGELOG.md",
+      "Gemfile",
+      "metadata.rb",
+      "README.md",
+      "Rakefile",
+      "recipes/default.rb",
+      "test/unit/spec/default_spec.rb",
+      "test/unit/spec/spec_helper.rb",
+      "test/integration/encrypted_data_bag_secret",
+      "test/integration/default/serverspec/spec_helper.rb",
+      "test/integration/default/serverspec/default_spec.rb"
+    ],
+    "directories": [
+      "recipes",
+      "templates",
+      "test/unit/spec",
+      "test/integration/data_bags",
+      "test/integration/default/serverspec"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "application-php",
+  "api": 1,
+  "default_stencil": "application-php",
+  "dependencies": {
+    "application": {},
+    "users": {},
+    "logrotate": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the PHP application",
+      "default": "php_example.com"
+    },
+    "repository": {
+      "help": "The URI of the application's git repository",
+      "default": "http://github.com/erulabs/wordpress_test"
+    },
+    "webserver": {
+      "help": "Which webserver should we provide an example for? Choose 'nginx'/'apache'",
+      "default": "nginx"
+    }
+  },
+  "stencils": {
+    "application-php": {
+      "files": {
+        "recipes/site_<NAME>.rb": "recipes/_lampapp.rb.jinja2",
+        "recipes/db_<NAME>.rb": "recipes/_database.rb",
+        "recipes/role_db.rb": "recipes/role_db.rb",
+        "recipes/role_web.rb": "recipes/role_web.rb",
+        "templates/default/sites/<NAME>/apache-site.erb": "templates/default/apache-site.erb",
+        "templates/default/sites/<NAME>/nginx-site.erb": "templates/default/nginx-site.erb",
+        "templates/default/sites/<NAME>/setup.sql.erb": "templates/default/setup.sql.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/lampapp_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

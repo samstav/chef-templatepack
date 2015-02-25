@@ -1,0 +1,26 @@
+{
+  "id": "redis",
+  "default_stencil": "redis",
+  "api": 1,
+  "dependencies": {
+    "redisio": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_redis"
+    },
+    "cache": {
+      "help": "Defaults to true, disables saving and enables LRU key clearing.",
+      "default": "true"
+    }
+  },
+  "stencils": {
+    "redis": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_redis.rb.jinja2",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/redis_spec.rb"
+      }
+    }
+  }
+}

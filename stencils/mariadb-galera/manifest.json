@@ -1,0 +1,35 @@
+{
+  "id": "mariadb-galera",
+  "default_stencil": "mariadb-galera",
+  "api": 1,
+  "dependencies": {
+    "database": {},
+    "apt": {},
+    "yum": {},
+    "ulimit": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_galera"
+    },
+    "package_manager": {
+      "help": "Which package manager to provide and example for - Choose 'apt'/'yum'",
+      "default": "apt"
+    }
+  },
+  "stencils": {
+    "mariadb-galera": {
+      "options": {
+      },
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_mariadb.rb.jinja2",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/mariadb_spec.rb",
+        "templates/default/mariadb/.my.cnf.erb": "templates/default/.my.cnf.erb",
+        "templates/default/mariadb/constants.sql.erb": "templates/default/constants.sql.erb",
+        "templates/default/mariadb/my.cnf.erb": "templates/default/my.cnf.erb",
+        "templates/default/mariadb/server-seed.erb": "templates/default/server-seed.erb"
+      }
+    }
+  }
+}
