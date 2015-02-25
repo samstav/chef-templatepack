@@ -1,4 +1,0 @@
-{
-  "name": "|{ cookbook['name'] }|",
-  "providers": []
-}
