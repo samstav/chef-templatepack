@@ -1,0 +1,6 @@
+{
+  "id": "kitchen_test_user",
+  "groups": [ "sysadmin", "dba", "devops" ],
+  "shell": "\/bin\/bash",
+  "comment": "Test use for Kitchen"
+}
