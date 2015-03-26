@@ -1,9 +1,9 @@
 ---
 driver:
   name: rackspace
-  public_key_path: ~/.ssh/id_rsa.pub
-  rackspace_region: 'IAD'
-  flavor_id: 'general1-2'
+  public_key_path: <%= ENV['RACKSPACE_PUBLIC_KEY'] || '~/.ssh/id_rsa.pub' %>
+  rackspace_region: <%= ENV['RACKSPACE_REGION'] || 'IAD' %>
+  flavor_id: <%= ENV['RACKSPACE_FLAVOR'] || 'general1-1' %>
   # Keep in mind, to use knife-rackspace you'll need to export
   # RACKSPACE_USERNAME and RACKSPACE_API_KEY in your shell
 
