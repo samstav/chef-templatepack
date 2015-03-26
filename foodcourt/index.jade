@@ -1,0 +1,79 @@
+doctype html
+html(lang="en", ng-app="foodcourt")
+  head
+    title FoodCourt
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href='index.css')
+    link(rel="stylesheet", href='bootstrap.min.css')
+    script(type='text/javascript', src= 'angular.min.js')
+  body(data-ng-controller="stencilController")
+    header.col-md-8.col-md-offset-2
+      .title FoodCourt
+      .subtitle
+        span Get food faster
+
+    .col-md-8.col-md-offset-2.manifest_output(data-ng-show="manifest_output")
+      h2.center Manifest
+      pre {{ manifest_output }}
+
+    .col-md-8.col-md-offset-2
+      .stencil(data-ng-repeat="(name, stencil) in selectedStencils", data-ng-show="stencil.open")
+        .panel.panel-primary
+          .panel-heading
+            .title {{ name }}
+            button.closer.btn.btn-xs(data-ng-click="closeStencilOptions(name)") X
+          .panel-body
+            h3 Stencil Details
+            table.table.table-striped
+              tr
+                td Help text:
+                td {{ stencils[name].help }}
+              tr
+                td Cookbook Dependencies:
+                td {{ prettyDeps(stencil.dependencies) }}
+              tr
+                td Stencils provided:
+                td {{ prettyDeps(stencil.stencils) }}
+            h3 Stencil Options
+            table.table.table-striped.options
+              tr(data-ng-repeat="(name, option) in stencil.options")
+                td.name {{ name }}:
+                td.help {{ option.help }}
+                td.input
+                  input.form-control(type="text", placeholder="{{ option.default }}", data-ng-model="option.choice", data-ng-change="buildManifest()", data-ng-hide="option.options")
+                  select.form-control(data-ng-model="option.choice", data-ng-change="buildManifest()", data-ng-show="option.options")
+                    option(data-ng-repeat="(i, possibleOption) in option.options", value="{{ possibleOption }}", selected="selected") {{ possibleOption }}
+
+    .col-md-8.col-md-offset-2
+      h2.center Selected Stencils
+      table.stencils.table.table-striped
+        tr.stencil(data-ng-repeat="(name, stencil) in selectedStencils")
+          td.name {{ name }}
+          td.help {{ stencils[name].help }}
+          td.options
+            button.btn.btn-xs.btn-default(data-ng-click="openStencilOptions(name)") Options
+          td.select
+            button.btn.btn-xs.btn-danger(data-ng-click="removeStencil(name)") Remove
+
+    .col-md-8.col-md-offset-2
+      h2.center Prime cuts
+      .subtitle These are tested combinations of stencils which help you get started ASAP
+      table.stencils.table
+        tr.stencil(data-ng-repeat="(name, stencil) in stencilPacks")
+          td.name {{ name }}
+          td.help Includes:
+            ul.inline
+              li(data-ng-repeat="(namedep, stencildep) in stencil.stencils") {{ stencildep.stencil_set }}
+          td.select
+            button.btn.btn-xs.btn-primary(data-ng-click="selectStencilPack(name)") Bundle
+
+    .col-md-8.col-md-offset-2
+      h2.center Available Stencils
+      table.stencils.table
+        tr.stencil(data-ng-repeat="(name, stencil) in stencils", data-ng-hide="selectedStencils[name]")
+          td.name {{ name }}
+          td.help {{ stencil.help }}
+          td.select
+            button.btn.btn-xs.btn-primary(data-ng-click="selectStencil(name)") Add
+    script(type='text/javascript', src= 'foodcourt.js')

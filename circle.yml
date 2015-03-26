@@ -1,0 +1,37 @@
+machine:
+  ruby:
+    version: 2.2.0
+
+dependencies:
+  pre:
+    - ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+    - cp test/ssh_config ~/.ssh/config
+    - sudo pip install fastfood
+    - sudo apt-get install libboost1.54-dev
+    - sudo apt-get install libgecode-dev
+    - USE_SYSTEM_GECODE=1 gem install dep-selector-libgecode
+    - bundle install
+
+general:
+  branches:
+    ignore:
+      - gh-pages
+      - dev
+      - seandon
+
+test:
+  override:
+    - mkdir tmp
+    - ./test/test.sh
+    - ./test/converge_all_cookbooks.sh:
+        timeout: 3600
+  post:
+    - ./test/destroy_all_kitchen_servers.sh
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - git config user.email "autopusher@circleci.erulabs.com"
+      - git config --global user.name "CircleCI"
+      - git push -f origin master:gh-pages
