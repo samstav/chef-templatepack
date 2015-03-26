@@ -1,4 +1,4 @@
 {
   "name": "|{ cookbook['name'] }|",
-  "providers": []
+  "stencils": []
 }
