@@ -3,4 +3,4 @@ require 'serverspec'
 
 set :backend, :exec
 
-set :path, '/sbin:/usr/local/sbin:/bin:/usr/bin:$PATH'
+set :path, '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin'
