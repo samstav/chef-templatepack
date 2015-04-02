@@ -2,6 +2,15 @@
   "api": 1,
   "framework": "chef",
   "stencil_sets": {
+    "nodejs": {
+      "help": "Installs NodeJS and provides an NPM LWRP"
+    },
+    "nginx": {
+      "help": "Creates a standalone Nginx instance"
+    },
+    "application-node": {
+      "help": "Creates an example NodeJS application recipe"
+    }
   },
   "base": {
     "files": [

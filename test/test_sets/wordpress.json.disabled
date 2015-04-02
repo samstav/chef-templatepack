@@ -1,0 +1,27 @@
+{
+  "name": "my_wordpress_cookbook",
+  "stencils": [
+    {
+      "stencil_set": "wordpress",
+      "name": "mywebsite.com",
+      "repository": "http://github.com/erulabs/wordpress_test"
+    },
+    {
+      "stencil_set": "php"
+    },
+    {
+      "stencil_set": "nginx",
+      "example": "php"
+    },
+    {
+      "stencil_set": "mariadb"
+    },
+    {
+      "stencil_set": "ha-redis",
+      "example": "php"
+    },
+    {
+      "stencil_set": "rackspace_networks"
+    }
+  ]
+}

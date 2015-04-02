@@ -1,0 +1,17 @@
+{
+  "name": "my_statsd_cookbook",
+  "stencils": [
+    {
+      "name": "_statsd",
+      "stencil_set": "statsd"
+    },
+    {
+      "name": "_graphite",
+      "stencil_set": "graphite"
+    },
+    {
+      "name": "_rackspace_networks",
+      "stencil_set": "rackspace_networks"
+    }
+  ]
+}

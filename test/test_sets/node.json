@@ -1,0 +1,15 @@
+{
+  "name": "my_node_cookbook",
+  "stencils": [
+    {
+      "name": "mywebsite.com",
+      "stencil_set": "application-node"
+    },
+    {
+      "stencil_set": "nodejs"
+    },
+    {
+      "stencil_set": "nginx"
+    }
+  ]
+}
