@@ -5,6 +5,9 @@
     "apache": {
       "help": "Creates a recipe for installing and tuning Apache2.4"
     },
+    "memcached": {
+      "help": "Creates a memcached recipe"
+    },
     "nodejs": {
       "help": "Installs NodeJS and provides an NPM LWRP"
     },
