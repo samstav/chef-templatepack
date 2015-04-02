@@ -1,0 +1,125 @@
+<?php
+
+/*
+    Author: Jim Westergren & Jeedo Aquino
+    File: index-with-redis.php
+    Updated: 2012-10-25
+
+    This is a redis caching system for wordpress.
+    see more here: www.jimwestergren.com/wordpress-with-redis-as-a-frontend-cache/
+
+    Originally written by Jim Westergren
+    - improved by Jeedo Aquino
+    - improved again by Seandon Mooy
+*/
+
+// change vars here
+$debug = 0; // set to 1 if you wish to see execution time and cache actions
+if ($debug) {
+  $start = microtime(); // start timing page exec
+}
+
+// from wp
+define('WP_USE_THEMES', true);
+
+$redis = new Redis();
+$redis->connect('127.0.0.1', <%= @redis_port %>);
+
+// init vars
+$domain = $_SERVER['HTTP_HOST'];
+$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$url = str_replace('?r=y', '', $url);
+$url = str_replace('?c=y', '', $url);
+$dkey = md5($domain);
+$ukey = md5($url);
+
+// check if logged in to wp
+$cookie = var_export($_COOKIE, true);
+$loggedin = preg_match("/wordpress_logged_in/", $cookie);
+$commentPost = preg_match("/comment_author/", $cookie);
+$postPass = preg_match("/wp-postpass/", $cookie);
+
+$cachable = true;
+if (isset($_SERVER['HTTP_CACHE_CONTROL'])) {
+    if ($_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache') {
+        $cachable = false;
+    }
+}
+if ($loggedin || $commentPost || $postPass) {
+  $cachable = false;
+}
+
+// check if a cache of the page exists
+if ($redis->hexists($dkey, $ukey) && $cachable && !strpos($url, '/feed/')) {
+
+    echo $redis->hget($dkey, $ukey);
+    $cached = 1;
+    $msg = 'this is a cache';
+
+// if a comment was submitted or clear page cache request was made delete cache of page
+} else if ($submit || substr($_SERVER['REQUEST_URI'], -4) == '?r=y') {
+
+    require('./wp-blog-header.php');
+    $redis->hdel($dkey, $ukey);
+    $msg = 'cache of page deleted';
+
+// delete entire cache, works only if logged in
+} else if ($loggedin && substr($_SERVER['REQUEST_URI'], -4) == '?c=y') {
+
+    require('./wp-blog-header.php');
+    if ($redis->exists($dkey)) {
+        $redis->del($dkey);
+        $msg = 'domain cache flushed';
+    } else {
+        $msg = 'no cache to flush';
+    }
+
+// if logged in don't cache anything
+} else if ($loggedin) {
+
+    require('./wp-blog-header.php');
+    $msg = 'not cached';
+
+// cache the page
+} else {
+
+    // turn on output buffering
+    ob_start();
+
+    require('./wp-blog-header.php');
+
+    // get contents of output buffer
+    $html = ob_get_contents();
+
+    // clean output buffer
+    ob_end_clean();
+    echo $html;
+
+    // Store to cache only if the page exist and is not a search result.
+    if (!is_404() && !is_search()) {
+        // store html contents to redis cache
+        $redis->hset($dkey, $ukey, $html);
+        $msg = 'cache is set';
+    }
+}
+
+// show messages if debug is enabled
+if ($debug) {
+    $end = microtime(); // get end execution time
+    echo $msg.': ';
+    echo t_exec($start, $end);
+}
+
+// time diff
+function t_exec($start, $end) {
+    $t = (getmicrotime($end) - getmicrotime($start));
+    return round($t,5);
+}
+
+// get time
+function getmicrotime($t) {
+    list($usec, $sec) = explode(" ",$t);
+    return ((float)$usec + (float)$sec);
+}
+
+?>

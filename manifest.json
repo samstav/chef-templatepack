@@ -10,6 +10,21 @@
     },
     "application-node": {
       "help": "Creates an example NodeJS application recipe"
+    },
+    "rackspace_networks": {
+      "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
+    },
+    "wordpress": {
+      "help": "Creates an example Wordpress application"
+    },
+    "mariadb": {
+      "help": "A modern MySQL system"
+    },
+    "php": {
+      "help": "Creates a standalone PHP instance"
+    },
+    "ha-redis": {
+      "help": "Creates a highly available Redis and HAProxy recipe"
     }
   },
   "base": {

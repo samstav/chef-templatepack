@@ -1,0 +1,117 @@
+#
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
+#
+# Copyright |{ cookbook['year'] }|, Rackspace
+#
+
+# # Default to assuming our server is a 1gb slice
+system_total_mem_mb = '1024'
+# If we have more information than that, get the systems total memory in MB
+unless node['memory']['total'].nil?
+  system_total_mem_mb = (node['memory']['total'].gsub(/kB/, '').to_i / 1024).round
+end
+# By default, we'll use one 3rd of it for Redis - adjust according to your needs
+node.default['redisio']['default_settings']['maxmemory'] = "#{(system_total_mem_mb / 3).round}M"
+
+# Consider using "rackspace_networks" stencil for easy networking magic :)
+if node['address_map'].nil?
+  # Use servicenet by default - NOT RECOMMENED - flip to false and make use of a cloud network
+  # see "rackspace_networks" for more.
+  iface = 'eth1'
+  node.default['address_map']['service_net_iface'] = iface
+  listen_address = node['network']['interfaces'][iface]['addresses'].find do |addr, addr_info|
+    addr_info[:family] == 'inet'
+  end
+  node.default['redisio']['default_settings']['address'] = listen_address.first
+  my_ip = node['address_map']['my_ip']
+else
+  node.default['redisio']['default_settings']['address'] = node['address_map']['my_ip']
+  my_ip = '127.0.0.1'
+end
+
+# FYI, THIS DOES NOT WORK across multiple hosts (for obvious reasons)
+# You'll need to replace this with a search.
+# Consider Seandon M's "rackspace_networks" stencil
+# or Jim R's chef-sugar-rackspace library
+if node['address_map']['redis_masters'].nil?
+  node.default['address_map']['redis_masters'] = [my_ip]
+end
+
+{% if options['example'] == "basic" %}
+node.default['redisio']['default_settings']['maxmemorypolicy'] = 'allkeys-lru'
+node.default['redisio']['default_settings']['save'] = nil
+node.default['redisio']['servers'] = [
+  {
+    name: 'pool0',
+    port: 6379
+  }
+]
+include_recipe 'redisio'
+include_recipe 'redisio::enable'
+{% endif %}
+{% if options['example'] == "php" %}
+node.default['ha-redis']['haproxy_port'] = 6379
+node.default['ha-redis']['redis_port'] = 6380
+node.default['ha-redis']['local_pool_port'] = 6381
+
+node.default['redisio']['default_settings']['maxmemorypolicy'] = 'allkeys-lru'
+node.default['redisio']['default_settings']['save'] = nil
+
+redis_master_address = node['address_map']['redis_masters'].first
+
+if redis_master_address == my_ip || redis_master_address.nil?
+  node.default['redisio']['servers'] = [
+    {
+      name: '_session',
+      maxmemory: "#{(system_total_mem_mb / 10).round}M",
+      port: node['ha-redis']['redis_port']
+    }
+  ]
+else
+  node.default['redisio']['servers'] = [
+    {
+      name: '_session',
+      port: node['ha-redis']['redis_port'],
+      maxmemory: "#{(system_total_mem_mb / 10).round}M",
+      slaveof: {
+        address: redis_master_address,
+        port: node['ha-redis']['redis_port']
+      }
+    }
+  ]
+end
+
+unless redis_master_address.nil?
+  node.default['redisio']['sentinels'] = [{
+    name: 'session_sentinel',
+    sentinel_port: 26_379,
+    master_ip: redis_master_address,
+    master_port: node['ha-redis']['redis_port']
+  }]
+end
+
+# keep a local redis store just for our local app
+node.default['redisio']['servers'] << {
+  name: '_local',
+  port: node['ha-redis']['local_pool_port'],
+  save: nil,
+  maxmemory: "#{(system_total_mem_mb / 3).round}M",
+  address: '127.0.0.1'
+}
+
+if node['address_map']['redis_masters'].length > 0
+  if tagged?('redis_sentinel')
+    node.default['redisio']['sentinel']['manage_config'] = false
+  end
+  tag('redis_sentinel')
+end
+tag('redis')
+
+include_recipe 'redisio'
+include_recipe 'redisio::enable'
+include_recipe 'redisio::sentinel'
+include_recipe 'redisio::sentinel_enable'
+{% endif %}
+
+# End redis recipe
