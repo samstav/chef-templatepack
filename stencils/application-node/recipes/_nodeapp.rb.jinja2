@@ -1,0 +1,184 @@
+#
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
+#
+# Copyright |{ cookbook['year'] }|, Rackspace
+#
+
+# The webserver user - TODO: Smart detect
+webserver_user = node['app-node']['webserver']
+
+# The application's name - used extensively
+app_name = |{ qstring(options['name']) }|
+app_path = "/var/www/#{app_name}"
+app_script_index = |{ qstring(options['entry_point']) }|
+
+# Specify a port which we'll pass to the app (to ask it to listen there)
+# As well as pass to NGINX for proxying
+# note that this must be quoted, otherwise chef flips out
+# (you cannot pass numbers as environment values)
+app_listen_port = '9000'
+
+# Many NodeJS apps use static asset directorys
+app_static_path = 'build'
+# On which URL should we proxy to the backend app?
+app_proxy_path = '/api'
+
+# You'll want to keep your applications secrets in a databag
+# It should be an encrypted databag named "secrets", with an item matching the "app_name"
+# It will need keys like so:
+# [secrets][app_name]['deploy_key']
+# [secrets][app_name]['db']['name']
+# [secrets][app_name]['db']['user']
+# [secrets][app_name]['db']['pass']
+# app_secrets = Chef::EncryptedDataBagItem.load('secrets', app_name)
+# For now, we'll assume there is no deploy_key (a public repo, and you want nonsense db creds)
+app_secrets = {
+  'deploy_key' => nil,
+  'db' => {
+    'name' => 'CHANGE_ME',
+    'user' => 'CHANGE_ME_AS_WELL',
+    'pass' => 'FOR_SURE_CHANGE_ME'
+  }
+}
+
+# Branch & Environment selection process
+case node.chef_environment
+when 'prd'
+  branch = 'production'
+  node_env = 'production'
+when 'stg'
+  branch = 'stage'
+  node_env = 'staging'
+else
+  branch = 'master'
+  node_env = 'development'
+end
+
+user app_name do
+  comment "User for #{app_name} application"
+  home app_path
+  shell '/bin/bash'
+end
+
+# The hash of environment variables to pass to the application
+# Note that "HOME" is required for PM2 to function properly
+api_environment_hash = {
+  'HOME' => app_path,
+  'NODE_ENV' => node_env,
+  'API_PORT' => app_listen_port
+}
+
+# Ensure Gulp is installed for our deployment example
+nodejs_npm 'gulp'
+
+application app_name do
+  path app_path
+  owner app_name
+  group webserver_user
+  repository |{ qstring(options['repository']) }|
+  deploy_key app_secrets['deploy_key']
+  revision branch
+  before_symlink do
+    # To sync an entire application to the CDN during each deploy, you can use "cloudsink"
+    # You'll need to make sure NodeJS is installed and you've installed the "cloudsink" npm module
+    # See https://github.com/erulabs/cloudsink
+    # execute "sink_#{app_name}_to_CDN" do
+    #  cwd release_path
+    #  command "cloudsink -s . -t #{app_name}-cdn -r IAD \
+    # -S -F -u #{node['rackspace']['cloud_credentials']['username']}\
+    # -k #{node['rackspace']['cloud_credentials']['api_key']} \
+    # -f '*.css,*.jpg,*.ico,*.png,*.bmp,*.js'"
+    # end
+
+    # Most NodeJS applications need to be installed. This is an "npm install":
+    nodejs_npm "Install_deps_for_#{app_name}" do
+      path release_path
+      json true
+      user app_name
+      # options ['--production'] # Sometimes you dont want to install development dependancies
+    end
+
+    # A lot of NodeJS applications have a build pipeline - many times "gulp" or "grunt" need to be run
+    # before deployment. Here is an example of a "gulp build", which is common (but not a standard).
+    execute "gulp_build_for_#{app_name}" do
+      command 'gulp build'
+      cwd release_path
+      user app_name
+      group app_name
+      ignore_failure true
+      environment(api_environment_hash)
+    end
+  end
+  after_restart do
+    # Instead of using the "restart_command" attribute, we'll restart the application here
+    # for a bit greater control - this is due to PM2 needing to be run in the right place by the right user
+    execute "restart_pm2_instance_for_#{app_name}" do
+      command "pm2 restart '#{app_name}'"
+      cwd release_path
+      user app_name
+      group app_name
+      environment(api_environment_hash)
+      only_if "pm2 show '#{app_name}'", user: app_name
+    end
+
+    # Here is an example of using MailGun to send email notifications on deployments
+    # execute "curl -s --user 'api:#{node.default['mailgun_api_key']}' \
+    # https://api.mailgun.net/v2/seandonmooy.com/messages \
+    # -F from='Chef <chef-client@#{node['address_map']['my_ip']}>' \
+    # -F to='seandon.mooy@rackspace.com' \
+    # -F subject='Chef-client: Deployed #{app_name} to #{node.chef_environment} on #{node.name}' \
+    # -F text='This mail was sent by #{node.name} at #{node['address_map']['my_ip']}'"
+
+    # And Slack.com!
+    # execute "send_slack_notification_for_#{app_name}" do
+    #   command "curl -X POST --data-urlencode 'payload={\"channel\": \"#CHANNEL_NAME_HERE\",\
+    # \"username\": \"Chef-Client\", \"text\": \"#{node.name} deployed #{app_name} to #{release_path}\", \
+    # \"icon_emoji\": \":fork_and_knife:\"}' https://hooks.slack.com/SLACK_HOOK_URL"
+    # end
+  end
+end
+
+# Ship the environment variables out to the users .bash_profile
+# this assests with troubleshooting, as you'll only need to become the user
+# to match how Chef interacts with pm2
+file "environment_variables_for_#{app_name}" do
+  path "#{app_path}/.bash_profile"
+  owner app_name
+  group webserver_user
+  mode 0644
+  content api_environment_hash.map { |k, v| "export #{k}='#{v}'" }.join("\n")
+end
+
+# We'll build the PM2 process here if it isn't already setup
+execute "create_pm2_instance_for_#{app_name}" do
+  command "pm2 start current/#{app_script_index} --name '#{app_name}'"
+  cwd app_path
+  user app_name
+  group app_name
+  not_if "pm2 show '#{app_name}' | grep online", user: app_name
+  environment(api_environment_hash)
+end
+
+# Configure Nginx
+template "/etc/nginx/sites-enabled/#{app_name}.conf" do
+  source "apps/#{app_name}/nginx-site.erb"
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    appname: app_name,
+    listen_port: app_listen_port,
+    static_path: app_static_path,
+    proxy_path: app_proxy_path
+  )
+  notifies :reload, 'service[nginx]'
+end
+
+logrotate_app "#{app_name}-access" do
+  path '/var/log/nginx/#{app_name}-access.log'
+  rotate 1000
+  frequency 'daily'
+  options %w(missingok compress dateext copytruncate)
+end
+

@@ -1,0 +1,33 @@
+upstream <%= @appname %>_upstream {
+  server 127.0.0.1:<%= @listen_port %>;
+  keepalive 60;
+}
+
+server {
+  listen 80;
+
+  # Make site accessible from http://localhost/
+  <% if node.chef_environment == 'prd' %>
+  server_name <%= @appname %> www.<%= @appname %>;
+  <% else %>
+  server_name stage.<%= @appname %> <%= @appname %> www.<%= @appname %> localhost;
+  <% end %>
+
+  location / {
+    root /var/www/<%= @appname %>/current/<%= @static_path %>;
+    index index.html;
+  }
+
+  location <%= @proxy_path %> {
+    rewrite <%= @proxy_path %>/(.*) /$1 break;
+    proxy_redirect off;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_set_header Connection "";
+    proxy_http_version 1.1;
+    proxy_pass http://<%= @appname %>_upstream;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "application-node",
+  "api": 1,
+  "default_stencil": "application-node",
+  "dependencies": {
+    "application": {},
+    "users": {},
+    "logrotate": {}
+  },
+  "stencil_combos": {
+    "nodejs": {},
+    "nginx": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the Node application",
+      "default": "node_example.com"
+    },
+    "repository": {
+      "help": "The URI of the application's git repository",
+      "default": "http://github.com/erulabs/node_test"
+    },
+    "entry_point": {
+      "help": "The name of the script to run (ie: `node server/index.js`)",
+      "default": "server/index.js"
+    }
+  },
+  "stencils": {
+    "application-node": {
+      "files": {
+        "recipes/app_<NAME>.rb": "recipes/_nodeapp.rb.jinja2",
+        "recipes/role_app.rb": "recipes/role_app.rb",
+        "recipes/kitchen_test.rb": "recipes/kitchen_test.rb",
+        "templates/default/apps/<NAME>/nginx-site.erb": "templates/default/nginx-site.erb",
+        "test/integration/default/serverspec/<NAME>_spec.rb": "test/integration/default/serverspec/nodeapp_spec.rb"
+      },
+      "options": {
+      }
+    }
+  }
+}

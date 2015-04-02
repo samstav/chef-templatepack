@@ -1,0 +1,40 @@
+{
+  "name": "my_lamp_cookbook",
+  "stencils": [
+    {
+      "name": "mywebsite.com",
+      "stencil_set": "application-php"
+    },
+    {
+      "name": "_php",
+      "stencil_set": "php"
+    },
+    {
+      "name": "_apache",
+      "stencil_set": "apache",
+      "example": "php-fpm"
+    },
+    {
+      "name": "_mariadb",
+      "stencil_set": "mariadb"
+    },
+    {
+      "name": "_varnish",
+      "stencil_set": "varnish"
+    },
+    {
+      "name": "_glusterfs",
+      "stencil_set": "glusterfs",
+      "mount_path": "/var/www/shared"
+    },
+    {
+      "name": "_haredis",
+      "stencil_set": "ha-redis",
+      "example": "php"
+    },
+    {
+      "name": "_rackspace_networks",
+      "stencil_set": "rackspace_networks"
+    }
+  ]
+}
