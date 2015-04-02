@@ -1,0 +1,27 @@
+{
+  "id": "ha-redis",
+  "default_stencil": "ha-redis",
+  "api": 1,
+  "dependencies": {
+    "redisio": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "_haredis"
+    },
+    "example": {
+      "help": "Various premade HA Redis examples",
+      "default": "basic"
+    }
+  },
+  "stencils": {
+    "ha-redis": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/_haredis.rb.jinja2",
+        "recipes/_haproxy.rb": "recipes/_haproxy.rb.jinja2",
+        "templates/default/haproxy.cfg.erb": "templates/default/haproxy.cfg.erb"
+      }
+    }
+  }
+}
