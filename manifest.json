@@ -2,6 +2,9 @@
   "api": 1,
   "framework": "chef",
   "stencil_sets": {
+    "apache": {
+      "help": "Creates a recipe for installing and tuning Apache2.4"
+    },
     "nodejs": {
       "help": "Installs NodeJS and provides an NPM LWRP"
     },
