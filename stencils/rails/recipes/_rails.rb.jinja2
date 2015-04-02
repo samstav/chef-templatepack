@@ -1,0 +1,137 @@
+#
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
+#
+# Copyright |{ cookbook['year'] }|, Rackspace
+#
+
+# This cookbook is designed to be used with RBENV and Nginx! Check the the "ruby" and "nginx" stencils
+# Otherwise, this ought to get you off the ground for passenger just by removing the Unicorn LWRP usage!
+# Remember to clean up the metadata as well!
+
+app_name = |{ qstring(options['name']) }|
+app_path = "/var/www/#{app_name}"
+rake_tasks = ['db:migrate', 'assets:precompile']
+rails_env = 'production'
+webserver_user = 'www-data'
+bundle_cmd = "#{node['rbenv']['root_path']}/shims/bundle"
+
+# You'll want to keep your applications secrets in a databag
+# It should be an encrypted databag named "secrets", with an item matching the "app_name"
+# It will need keys like so:
+# [secrets][app_name]['deploy_key']
+# [secrets][app_name]['db']['name']
+# [secrets][app_name]['db']['user']
+# [secrets][app_name]['db']['pass']
+# app_secrets = Chef::EncryptedDataBagItem.load('secrets', app_name)
+# For now, we'll assume there is no deploy_key (a public repo, and you want nonsense db creds)
+app_secrets = {
+  'deploy_key' => nil,
+  'db' => {
+    'name' => 'CHANGE_ME',
+    'user' => 'CHANGE_ME_AS_WELL',
+    'pass' => 'FOR_SURE_CHANGE_ME'
+  }
+}
+
+user_account app_name do
+  home app_path
+end
+
+# group 'rbenv' do
+#   action :modify
+#   members app_name
+#   append true
+# end
+
+# called postgresql-devel on RHEL
+%w(
+  libpq-dev
+  libsqlite3-dev
+).each do |pkg|
+  package pkg
+end
+
+application app_name do
+  path app_path
+  owner app_name
+  group app_name
+  repository |{ qstring(options['repository']) }|
+  revision 'master'
+  deploy_key app_secrets['deploy_key']
+  environment_name node.chef_environment
+  create_dirs_before_symlink %w(tmp tmp/cache)
+  before_symlink do
+    %w(tmp tmp/pids tmp/sockets tmp/cache log).each do |d|
+      directory File.join(release_path, d) do
+        owner app_name
+        group app_name
+        action :create
+      end
+    end
+    execute "bundle install #{app_name}" do
+      command "echo \"#{node['ruby']['version']}\" > .ruby_version && \
+#{bundle_cmd} install --path vendor/bundle"
+      user app_name
+      cwd release_path
+      environment(
+        'RAILS_ENV' => rails_env,
+        'HOME' => app_path
+      )
+    end
+    rake_tasks.each do |task|
+      execute "do_extra_rake_task_#{task}_for_#{app_name}" do
+        command "#{bundle_cmd} exec rake #{task}"
+        user app_name
+        cwd release_path
+        environment(
+          'RAILS_ENV' => rails_env,
+          'HOME' => app_path,
+          'GUARD_GEM_SILENCE_DEPRECATIONS' => '1'
+        )
+      end
+    end
+  end
+  restart_command do
+    service "unicorn-#{app_name}" do
+      action :restart
+      only_if { File.exist?("/etc/init.d/unicorn-#{app_name}") }
+    end
+  end
+end
+
+unicorn_socket = "unix:/tmp/unicorn-#{app_name}.sock"
+
+unicorn_ng_config File.join(app_path, 'current/config/unicorn.rb') do
+  worker_processes 4
+  user app_name
+  working_directory File.join(app_path, 'current')
+  listen unicorn_socket
+  pid "/tmp/unicorn-#{app_name}.pid"
+  after_fork <<-EOS
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.establish_connection
+  EOS
+end
+unicorn_ng_service "#{app_path}/current" do
+  service_name "unicorn-#{app_name}"
+  config File.join(app_path, 'current/config/unicorn.rb')
+  environment rails_env
+  user app_name
+  bundle bundle_cmd
+  pidfile "/tmp/unicorn-#{app_name}.pid"
+end
+
+template "/etc/nginx/sites-enabled/#{app_name}.conf" do
+  source "apps/#{app_name}/nginx.conf.erb"
+  owner webserver_user
+  group webserver_user
+  mode 0644
+  variables(
+    app_name: app_name,
+    hostname: app_name,
+    socket: unicorn_socket,
+    root: File.join(app_path, 'current')
+  )
+  notifies :reload, 'service[nginx]'
+end

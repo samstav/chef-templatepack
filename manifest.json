@@ -31,6 +31,12 @@
     },
     "varnish": {
       "help": "Creates a recipe for installing Varnish"
+    },
+    "ruby": {
+      "help": "Creates a recipe for installing ruby via RBENV"
+    },
+    "rails": {
+      "help": "Creates a rails application recipe based on the type, defaults to Apache"
     }
   },
   "base": {

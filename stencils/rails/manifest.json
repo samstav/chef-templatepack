@@ -1,0 +1,32 @@
+{
+  "id": "rails",
+  "api": 1,
+  "default_stencil": "rails",
+  "dependencies": {
+    "rackspace_iptables": {},
+    "chef-sugar": {},
+    "application": {},
+    "rbenv": {},
+    "unicorn-ng": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the rails application",
+      "default": "rails_example.com"
+    },
+    "repository": {
+      "help": "The URI of the application's git repository",
+      "default": "http://github.com/erulabs/rails-hartl"
+    }
+  },
+  "stencils": {
+    "rails": {
+      "files": {
+        "recipes/app_<NAME>.rb": "recipes/_rails.rb.jinja2",
+        "recipes/role_web.rb": "recipes/role_web.rb",
+        "recipes/kitchen_test.rb": "recipes/kitchen_test.rb",
+        "templates/default/apps/<NAME>/nginx.conf.erb": "templates/default/nginx.conf.erb"
+      }
+    }
+  }
+}
