@@ -13,7 +13,7 @@ namespace :style do
       fail_tags: %w(any),
       # FC015: Consider converting definition to a LWRP (allow definitions without complaining)
       tags: %w(~FC015),
-      chef_version: '12.1.1'
+      chef_version: '12.2.1'
     }
   end
 
