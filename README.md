@@ -19,7 +19,7 @@ Template pack for FastFood
 Please keep in mind these templates are meant to be fairly generic. There is no replacment for knowing Chef! Please be sure to READ the recipes which are output - you'll undoubted need to modify them (which is the entire point of template cookbooks).
 
 ## General guidelines:
-  - Please use GitHub issues or [Waffle.io](https://waffle.io/erulabs/seandons_templatepack) for development tasks
+  - Please use GitHub issues for development tasks
   - Files which contain jinja markup should hold the extension .jinja2 for clarity. Files which do not contain any jinja2 markup do not need the extension.
   - Extensive tests are welcome.
 
