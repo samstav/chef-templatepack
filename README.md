@@ -1,6 +1,6 @@
 Template pack for FastFood
 -----
-[![Circle CI](https://circleci.com/gh/erulabs/seandons_templatepack/tree/master.png)](https://circleci.com/gh/erulabs/seandons_templatepack/tree/master)
+[![Circle CI](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master.png)](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master)
 
 
 # Usage
