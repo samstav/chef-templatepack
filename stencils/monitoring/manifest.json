@@ -20,6 +20,8 @@
     "cloud_monitoring": {
       "files": {
         "recipes/<NAME>.rb": "recipes/cloud_monitoring.rb"
+        "test/integration/default/serverspec/spec_helper.rb": "test/integration/default/serverspec/spec_helper.rb"
+        "test/integration/default/serverspec/<NAME>_spec.rb": "test/integration/default/serverspec/cloud_monitoring_spec.rb"
       }
     }
   }
