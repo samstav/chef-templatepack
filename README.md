@@ -1,6 +1,6 @@
 Template pack for FastFood
 -----
-[![Circle CI](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master.png)](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master)
+[![Circle CI](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master.png?circle-token=fc8b590f0c4f9acd9c2720716a65ffd60b28bd32)](https://circleci.com/gh/AutomationSupport/fastfood-templatepack/tree/master)
 
 
 # Usage
