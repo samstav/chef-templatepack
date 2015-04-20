@@ -1,3 +1,4 @@
 foodcourt/node_modules
 tmp
 .kitchen
+Gemfile.lock
