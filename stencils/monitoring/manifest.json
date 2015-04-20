@@ -1,0 +1,26 @@
+{
+  "id": "monitoring",
+  "api": 1,
+  "default_stencil": "cloud_monitoring",
+  "dependencies": {
+    "rackspace_cloud_monitoring": {}
+  },
+  "berks_dependencies": {
+    "rackspace_cloud_monitoring": {
+      "git": "https://github.com/rackspace-cookbooks/rackspace_cloud_monitoring"
+    }
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "cloud_monitoring"
+    }
+  },
+  "stencils": {
+    "cloud_monitoring": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/cloud_monitoring.rb"
+      }
+    }
+  }
+}
