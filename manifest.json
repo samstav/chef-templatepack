@@ -40,6 +40,9 @@
     },
     "rails": {
       "help": "Creates a rails application recipe based on the type, defaults to Apache"
+    },
+    "monitoring": {
+      "help": "Creates monitors for Rackspace Cloud Monitoring"
     }
   },
   "base": {
