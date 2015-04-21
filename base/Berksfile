@@ -3,4 +3,5 @@ metadata
 
 cookbook 'platformstack', git: 'git@github.com:rackspace-cookbooks/platformstack.git'
 cookbook 'rackspace_cloudbackup', git: 'git@github.com:rackspace-cookbooks/rackspace_cloudbackup.git'
+cookbook 'rackspace_cloud_monitoring', git: 'git@github.com:rackspace-cookbooks/rackspace_cloud_monitoring.git'
 

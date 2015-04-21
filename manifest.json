@@ -5,44 +5,41 @@
     "apache": {
       "help": "Creates a recipe for installing and tuning Apache2.4"
     },
-    "memcached": {
-      "help": "Creates a memcached recipe"
-    },
-    "nodejs": {
-      "help": "Installs NodeJS and provides an NPM LWRP"
-    },
-    "nginx": {
-      "help": "Creates a standalone Nginx instance"
-    },
     "application-node": {
       "help": "Creates an example NodeJS application recipe"
-    },
-    "rackspace_networks": {
-      "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
-    },
-    "wordpress": {
-      "help": "Creates an example Wordpress application"
-    },
-    "mariadb": {
-      "help": "A modern MySQL system"
-    },
-    "php": {
-      "help": "Creates a standalone PHP instance"
     },
     "ha-redis": {
       "help": "Creates a highly available Redis and HAProxy recipe"
     },
-    "varnish": {
-      "help": "Creates a recipe for installing Varnish"
+    "mariadb": {
+      "help": "A modern MySQL system"
     },
-    "ruby": {
-      "help": "Creates a recipe for installing ruby via RBENV"
+    "memcached": {
+      "help": "Creates a memcached recipe"
+    },
+    "nginx": {
+      "help": "Creates a standalone Nginx instance"
+    },
+    "nodejs": {
+      "help": "Installs NodeJS and provides an NPM LWRP"
+    },
+    "php": {
+      "help": "Creates a standalone PHP instance"
+    },
+    "rackspace_networks": {
+      "help": "A utility for working with Rackspace Cloud Networks, ServiceNet and PublicNet"
     },
     "rails": {
       "help": "Creates a rails application recipe based on the type, defaults to Apache"
     },
-    "monitoring": {
-      "help": "Creates monitors for Rackspace Cloud Monitoring"
+    "ruby": {
+      "help": "Creates a recipe for installing ruby via RBENV"
+    },
+    "varnish": {
+      "help": "Creates a recipe for installing Varnish"
+    },
+    "wordpress": {
+      "help": "Creates an example Wordpress application"
     }
   },
   "base": {
@@ -51,19 +48,21 @@
       ".kitchen.yml",
       "Berksfile",
       "CHANGELOG.md",
-      "Gemfile",
       "fastfood.json",
+      "Gemfile",
       "metadata.rb",
       "Rakefile",
       "README.md",
-      "TROUBLESHOOTING.md",
+      "recipes/cloud_monitoring.rb",
       "recipes/default.rb",
+      "test/integration/default/serverspec/cloud_monitoring_spec.rb",
+      "test/integration/default/serverspec/default_spec.rb",
+      "test/integration/default/serverspec/spec_helper.rb",
+      "test/integration/encrypted_data_bag_secret",
+      "test/integration/environments/kitchen.json"
       "test/unit/spec/default_spec.rb",
       "test/unit/spec/spec_helper.rb",
-      "test/integration/encrypted_data_bag_secret",
-      "test/integration/default/serverspec/spec_helper.rb",
-      "test/integration/default/serverspec/default_spec.rb",
-      "test/integration/environments/kitchen.json"
+      "TROUBLESHOOTING.md",
     ],
     "directories": [
       "attributes",
@@ -73,9 +72,9 @@
       "recipes",
       "resources",
       "templates",
-      "test/unit/spec",
       "test/integration/data_bags",
       "test/integration/default/serverspec"
+      "test/unit/spec",
     ]
   }
 }
