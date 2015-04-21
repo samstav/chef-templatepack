@@ -30,8 +30,8 @@ rackspace_cloud_monitoring_check 'memory' do
 end
 
 ignored_fs_types = %w(cgroup configfs devpts devtmpfs
-                      efivars fusectl mqueue proc
-                      securityfs sys sysfs tmpfs)
+                      efivars fusectl mqueue proc pstore
+                      securityfs sys sysfs tmpfs xenfs)
 
 node['filesystem'].each do |k, v|
   next if v['fs_type'].nil? ||
