@@ -20,6 +20,6 @@ end
 
 node.default['authorization']['sudo']['passwordless'] = true
 
-# Rackspace support, system users, and PlatformStack by default
+include_recipe 'cloud_monitoring'
 include_recipe 'users::sysadmins'
 include_recipe 'platformstack::rackops_rolebook'

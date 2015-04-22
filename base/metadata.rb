@@ -11,6 +11,7 @@ depends 'users'
 depends 'locale'
 depends 'apt'
 depends 'yum'
+depends 'rackspace_cloud_monitoring'
 # Please bear in mind, due to Jinja templating, there must be TWO line breaks at the
 # end of this file.
 
