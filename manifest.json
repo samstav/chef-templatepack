@@ -59,10 +59,10 @@
       "test/integration/default/serverspec/default_spec.rb",
       "test/integration/default/serverspec/spec_helper.rb",
       "test/integration/encrypted_data_bag_secret",
-      "test/integration/environments/kitchen.json"
+      "test/integration/environments/kitchen.json",
       "test/unit/spec/default_spec.rb",
       "test/unit/spec/spec_helper.rb",
-      "TROUBLESHOOTING.md",
+      "TROUBLESHOOTING.md"
     ],
     "directories": [
       "attributes",
@@ -73,8 +73,8 @@
       "resources",
       "templates",
       "test/integration/data_bags",
-      "test/integration/default/serverspec"
-      "test/unit/spec",
+      "test/integration/default/serverspec",
+      "test/unit/spec"
     ]
   }
 }
