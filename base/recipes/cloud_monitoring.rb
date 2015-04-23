@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: |{ cookbook['name'] }|
-# Recipe :: |{ options['name'] }|
+# Recipe :: cloud_monitoring
 #
 # Copyright |{ cookbook['year'] }|, Rackspace
 #
